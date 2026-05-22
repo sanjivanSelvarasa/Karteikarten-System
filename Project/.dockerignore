@@ -1,9 +1,7 @@
-# SQLite databases
 *.sqlite
 *.sqlite3
 *.db
 
-# SQLite temp/journal files
 *.db-journal
 *.sqlite-journal
 *.sqlite-wal
