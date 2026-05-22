@@ -1,9 +1,9 @@
-<style lang="ts" setup>
+<script lang="ts" setup>
 
-</style>
+</script>
 
 <template>
-
+  <h1>Das ist ein Beispiel</h1>
 </template>
 
 <style scoped>
