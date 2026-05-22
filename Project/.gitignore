@@ -8,3 +8,8 @@
 *.sqlite-journal
 *.sqlite-wal
 *.sqlite-shm
+
+# Enviroment files
+.env
+.env.*
+!.env.example
