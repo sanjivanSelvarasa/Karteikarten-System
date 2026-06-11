@@ -1,0 +1,13 @@
+services:
+	backend:
+		build:
+			context: ./Backend
+			dockerfile: Dockerfile
+		container_name: karteikarten-backend
+		env_file:
+			- ./Backend/.env
+		ports:
+			- "3000:3000"
+		volumes:
+			- ./DB:/app/DB
+		restart: unless-stopped
