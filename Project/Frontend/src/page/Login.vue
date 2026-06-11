@@ -130,9 +130,24 @@
     </div>
   </template>
   
-  <script setup>
+  <script setup lang="ts">
   import { ref, reactive } from 'vue'
   import { useRouter } from 'vue-router'
+
+  defineOptions({ name: 'LoginPage' })
+
+  interface LoginResponse {
+    ok: boolean
+    message: string
+    data?: {
+      token: string
+      user: {
+        user_id: number
+        username: string
+        email: string
+      }
+    }
+  }
   
   const router = useRouter()
   
@@ -170,12 +185,38 @@
   
     loading.value = true
     try {
-      // Replace with real API call
-      await new Promise(r => setTimeout(r, 1200))
-      // await authStore.login(form)
-      router.push('/dashboard')
-    } catch (e) {
-      loginError.value = 'E-Mail oder Passwort ist falsch.'
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: form.email.trim(),
+          password: form.password,
+        }),
+      })
+      const result = await response.json() as LoginResponse
+
+      if (!response.ok || !result.data?.token || !result.data.user) {
+        throw new Error(
+          response.status === 401
+            ? 'E-Mail oder Passwort ist falsch.'
+            : result.message || 'Anmeldung fehlgeschlagen',
+        )
+      }
+
+      const storage = form.remember ? localStorage : sessionStorage
+      const otherStorage = form.remember ? sessionStorage : localStorage
+      otherStorage.removeItem('authToken')
+      otherStorage.removeItem('authUser')
+      storage.setItem('authToken', result.data.token)
+      storage.setItem('authUser', JSON.stringify(result.data.user))
+
+      await router.push('/dashboard')
+    } catch (error) {
+      loginError.value = error instanceof TypeError
+        ? 'Der Server ist nicht erreichbar.'
+        : error instanceof Error
+          ? error.message
+          : 'E-Mail oder Passwort ist falsch.'
     } finally {
       loading.value = false
     }

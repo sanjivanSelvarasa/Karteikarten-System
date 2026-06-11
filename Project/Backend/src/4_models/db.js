@@ -2,8 +2,20 @@ const fs = require('fs');
 const path = require('path');
 const { DatabaseSync } = require('node:sqlite');
 
-const dbPath = path.resolve(__dirname, '..', '..', process.env.DB_PATH || '../DB/karteikarten.db');
-const schemaPath = path.resolve(__dirname, '..', '..', '..', 'DB', 'create.sql');
+const dbPath = path.resolve(
+  __dirname,
+  '..',
+  '..',
+  process.env.DB_PATH || 'DB/karteikarten.db',
+);
+
+const schemaPath = path.resolve(
+  __dirname,
+  '..',
+  '..',
+  'DB',
+  'create.sql',
+);
 
 fs.mkdirSync(path.dirname(dbPath), { recursive: true });
 

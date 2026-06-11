@@ -1,37 +1,60 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LandingPage from '@/page/Landingpage.vue'
-<<<<<<< Updated upstream
-import Dashboard from '@/page/Dashboard.vue'
-=======
-import LoginPage from '@/page/Login.vue'
-import RegisterPage from '@/page/Register.vue'
->>>>>>> Stashed changes
+import DashboardPage from '@/page/Dashboard.vue'
+import Login from '@/page/Login.vue'
+import Register from '@/page/Register.vue'
+import CreateSetView from '@/page/CreateSetView.vue'
+import LearnView from '@/page/LearnView.vue'
+import Landingpage from '@/page/Landingpage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'LandingPage',
-      component: LandingPage,
+      name: 'landingpage',
+      component: Landingpage,
     },
     {
-<<<<<<< Updated upstream
       path: '/dashboard',
-      name: 'Dashboard',
-      component: Dashboard,
-=======
-      path: "/login",
-      name: "LoginPage",
-      component: LoginPage,
+      name: 'dashboard',
+      component: DashboardPage,
     },
     {
-      path: "/register",
-      name: "RegisterPage",
-      component: RegisterPage,
->>>>>>> Stashed changes
+      path: '/login',
+      name: 'login',
+      component: Login,
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register,
+    },
+    {
+      path: '/sets/create',
+      name: 'create-set',
+      component: CreateSetView,
+    },
+    {
+      path: '/learn/:id',
+      name: 'learn',
+      component: LearnView,
     },
   ],
+})
+
+router.beforeEach((to) => {
+  const protectedRoutes = ['dashboard', 'create-set', 'learn']
+  const hasToken = Boolean(
+    localStorage.getItem('authToken') || sessionStorage.getItem('authToken'),
+  )
+
+  if (protectedRoutes.includes(String(to.name)) && !hasToken) {
+    return { name: 'login' }
+  }
+
+  if (to.name === 'login' && hasToken) {
+    return { name: 'dashboard' }
+  }
 })
 
 export default router

@@ -232,9 +232,24 @@
     </div>
   </template>
   
-  <script setup>
+  <script setup lang="ts">
   import { ref, reactive, computed } from 'vue'
   import { useRouter } from 'vue-router'
+
+  defineOptions({ name: 'RegisterPage' })
+
+  interface RegisterResponse {
+    ok: boolean
+    message: string
+    data?: {
+      token: string
+      user: {
+        user_id: number
+        username: string
+        email: string
+      }
+    }
+  }
   
   const router = useRouter()
   
@@ -280,8 +295,8 @@
     if (s === 3) return 'good'
     return 'strong'
   })
-  const strengthLabels = { weak: 'Schwach', fair: 'Mittel', good: 'Gut', strong: 'Stark 💪' }
-  function strengthSegmentClass(i) {
+  const strengthLabels = { weak: 'Schwach', fair: 'Mittel', good: 'Gut', strong: 'Stark' }
+  function strengthSegmentClass(i: number) {
     const active = i <= strengthScore.value
     return [
       active ? 'strength-segment--active' : '',
@@ -290,7 +305,7 @@
   }
   
   /* Validation */
-  function validate(field) {
+  function validate(field: string) {
     switch (field) {
       case 'firstName':
         errors.firstName = form.firstName.trim() ? '' : 'Vorname ist erforderlich'
@@ -328,12 +343,37 @@
   
     loading.value = true
     try {
-      await new Promise(r => setTimeout(r, 1400))
-      // await authStore.register(form)
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: `${form.firstName.trim()} ${form.lastName.trim()}`,
+          email: form.email.trim(),
+          password: form.password,
+        }),
+      })
+      const result = await response.json() as RegisterResponse
+
+      if (!response.ok || !result.data?.token || !result.data.user) {
+        throw new Error(
+          response.status === 409
+            ? 'Diese E-Mail-Adresse ist bereits registriert.'
+            : result.message || 'Registrierung fehlgeschlagen',
+        )
+      }
+
+      localStorage.setItem('authToken', result.data.token)
+      localStorage.setItem('authUser', JSON.stringify(result.data.user))
+      sessionStorage.removeItem('authToken')
+      sessionStorage.removeItem('authUser')
       success.value = true
-      setTimeout(() => router.push('/dashboard'), 1500)
-    } catch (e) {
-      registerError.value = 'Diese E-Mail-Adresse ist bereits registriert.'
+      window.setTimeout(() => void router.push('/dashboard'), 900)
+    } catch (error) {
+      registerError.value = error instanceof TypeError
+        ? 'Der Server ist nicht erreichbar.'
+        : error instanceof Error
+          ? error.message
+          : 'Registrierung fehlgeschlagen.'
     } finally {
       loading.value = false
     }
