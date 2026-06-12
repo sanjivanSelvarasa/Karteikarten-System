@@ -22,6 +22,29 @@ function listLearningSetsByUserId(userId) {
     .all(userId);
 }
 
+function listPublicLearningSets() {
+  return db
+    .prepare(
+      `SELECT ls.set_id, ls.user_id, ls.title, ls.description, ls.is_public, ls.created_at, ls.updated_at,
+              u.username AS owner_username
+       FROM learning_sets ls
+       INNER JOIN users u ON u.user_id = ls.user_id
+       WHERE ls.is_public = 1
+       ORDER BY ls.updated_at DESC`,
+    )
+    .all();
+}
+
+function findLearningSetById(setId) {
+  return db
+    .prepare(
+      `SELECT set_id, user_id, title, description, is_public, created_at, updated_at
+       FROM learning_sets
+       WHERE set_id = ?`,
+    )
+    .get(setId);
+}
+
 function findLearningSetByIdAndUserId(setId, userId) {
   return db
     .prepare(
@@ -43,7 +66,19 @@ function updateLearningSet({ setId, userId, title, description, isPublic }) {
 }
 
 function deleteLearningSet(setId, userId) {
-  const tx = db.transaction(() => {
+  try {
+    db.exec('BEGIN');
+
+    db.prepare(
+      `DELETE FROM user_flashcard_progress
+       WHERE flashcard_id IN (SELECT flashcard_id FROM flashcards WHERE set_id = ?)`,
+    ).run(setId);
+
+    db.prepare(
+      `DELETE FROM review_logs
+       WHERE flashcard_id IN (SELECT flashcard_id FROM flashcards WHERE set_id = ?)`,
+    ).run(setId);
+
     db.prepare(
       `DELETE FROM flashcards
        WHERE set_id = ?`,
@@ -56,15 +91,19 @@ function deleteLearningSet(setId, userId) {
       )
       .run(setId, userId);
 
+    db.exec('COMMIT');
     return result.changes;
-  });
-
-  return tx();
+  } catch (error) {
+    db.exec('ROLLBACK');
+    throw error;
+  }
 }
 
 module.exports = {
   createLearningSet,
   listLearningSetsByUserId,
+  listPublicLearningSets,
+  findLearningSetById,
   findLearningSetByIdAndUserId,
   updateLearningSet,
   deleteLearningSet,

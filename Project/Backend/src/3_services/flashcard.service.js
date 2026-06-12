@@ -5,7 +5,7 @@ const {
   updateFlashcard,
   deleteFlashcard,
 } = require('../4_models/flashcard.model');
-const { findLearningSetByIdAndUserId } = require('../4_models/learningSet.model');
+const { findLearningSetByIdAndUserId, findLearningSetById } = require('../4_models/learningSet.model');
 const { createHttpError } = require('../5_utils/httpError');
 const { isNonEmptyString } = require('../5_utils/validators');
 
@@ -37,8 +37,10 @@ function createForSet(userId, setId, payload) {
 }
 
 function listForSet(userId, setId) {
-  const set = findLearningSetByIdAndUserId(setId, userId);
-  if (!set) {
+  const ownSet = findLearningSetByIdAndUserId(setId, userId);
+  const canAccessPublicSet = !ownSet && Boolean(findLearningSetById(setId)?.is_public);
+
+  if (!ownSet && !canAccessPublicSet) {
     throw createHttpError(404, 'Learning set not found');
   }
 
