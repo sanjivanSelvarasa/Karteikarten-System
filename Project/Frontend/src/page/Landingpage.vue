@@ -97,8 +97,8 @@ onBeforeUnmount(() => observer?.disconnect())
         </nav>
 
         <div class="nav-actions">
-          <a href="#" class="btn btn-ghost">Einloggen</a>
-          <a href="#" class="btn btn-primary">Kostenlos starten</a>
+          <RouterLink to="/login" class="btn btn-ghost">Einloggen</RouterLink>
+          <RouterLink to="/register" class="btn btn-primary">Kostenlos starten</RouterLink>
         </div>
       </div>
     </header>
@@ -126,10 +126,6 @@ onBeforeUnmount(() => observer?.disconnect())
             <a href="#" class="btn btn-primary">
               <i class="fa-solid fa-plus" aria-hidden="true"></i>
               Jetzt Lernset erstellen
-            </a>
-            <a href="#lernmodus" class="btn btn-secondary">
-              <i class="fa-solid fa-play" aria-hidden="true"></i>
-              Demo ansehen
             </a>
           </div>
 
@@ -478,7 +474,7 @@ onBeforeUnmount(() => observer?.disconnect())
 .btn-ghost { color: var(--color-text); padding: 10px 18px; border-radius: var(--radius-sm); font-weight: 700; }
 .btn-ghost:hover { background: var(--color-bg-soft); color: var(--color-periwinkle-dark); }
 .btn-light {
-  color: var(--color-salmon-dark); background: var(--color-surface);
+  color: var(--color-salmon-dark)!important; background: var(--color-surface);
   box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.35);
 }
 .btn-light:hover { transform: translateY(-3px); }
