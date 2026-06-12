@@ -1,6 +1,7 @@
 const {
   createLearningSet,
   listLearningSetsByUserId,
+  listPublicLearningSets,
   findLearningSetByIdAndUserId,
   updateLearningSet,
   deleteLearningSet,
@@ -25,6 +26,10 @@ function createForUser(userId, payload) {
 
 function listForUser(userId) {
   return listLearningSetsByUserId(userId);
+}
+
+function listPublic() {
+  return listPublicLearningSets();
 }
 
 function getOneForUser(userId, setId) {
@@ -71,6 +76,7 @@ function removeForUser(userId, setId) {
 module.exports = {
   createForUser,
   listForUser,
+  listPublic,
   getOneForUser,
   updateForUser,
   removeForUser,

@@ -25,6 +25,18 @@ function listLearningSets(req, res, next) {
   }
 }
 
+function listPublicLearningSets(req, res, next) {
+  try {
+    const data = learningSetService.listPublic();
+    res.status(200).json({
+      ok: true,
+      data: { learningSets: data },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 function getLearningSet(req, res, next) {
   try {
     const setId = Number(req.params.setId);
@@ -68,6 +80,7 @@ function deleteLearningSet(req, res, next) {
 module.exports = {
   createLearningSet,
   listLearningSets,
+  listPublicLearningSets,
   getLearningSet,
   updateLearningSet,
   deleteLearningSet,

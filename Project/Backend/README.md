@@ -1,6 +1,6 @@
 # Backend API
 
-Express + SQLite backend for StudyDeck.
+Express + SQLite backend for the Karteikarten-System.
 
 ## Run locally
 
@@ -12,6 +12,12 @@ Express + SQLite backend for StudyDeck.
    npm run dev
 
 Default base URL: http://localhost:3000
+
+## CORS
+
+Set `CORS_ORIGIN` in `.env` as a comma-separated list of allowed frontend origins, for example:
+
+`CORS_ORIGIN=http://localhost:5173,https://karteikarten.gian.ink`
 
 ## Main endpoints
 

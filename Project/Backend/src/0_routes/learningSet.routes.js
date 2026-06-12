@@ -9,6 +9,7 @@ router.use(requireAuth);
 
 router.post('/', learningSetController.createLearningSet);
 router.get('/', learningSetController.listLearningSets);
+router.get('/public', learningSetController.listPublicLearningSets);
 router.get('/:setId', learningSetController.getLearningSet);
 router.put('/:setId', learningSetController.updateLearningSet);
 router.delete('/:setId', learningSetController.deleteLearningSet);

@@ -1,66 +1,59 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import DashboardPage from '@/page/Dashboard.vue'
-import Login from '@/page/Login.vue'
-import Register from '@/page/Register.vue'
-import CreateSetView from '@/page/CreateSetView.vue'
-import LearnView from '@/page/LearnView.vue'
-import SetCardsView from '@/page/SetCardsView.vue'
-import Landingpage from '@/page/Landingpage.vue'
+import LandingPage from '@/page/Landingpage.vue'
+import LoginPage from '@/page/Login.vue'
+import RegisterPage from '@/page/Register.vue'
+import Dashboard from '@/page/Dashboard.vue'
+import StudySet from '@/page/StudySet.vue'
+import { useAuthStore } from '@/stores/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'landingpage',
-      component: Landingpage,
-    },
-    {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: DashboardPage,
+      name: 'LandingPage',
+      component: LandingPage,
     },
     {
       path: '/login',
-      name: 'login',
-      component: Login,
+      name: 'LoginPage',
+      component: LoginPage,
+      meta: { guestOnly: true },
     },
     {
       path: '/register',
-      name: 'register',
-      component: Register,
+      name: 'RegisterPage',
+      component: RegisterPage,
+      meta: { guestOnly: true },
     },
     {
-      path: '/sets/create',
-      name: 'create-set',
-      component: CreateSetView,
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: Dashboard,
+      meta: { requiresAuth: true },
     },
     {
-      path: '/sets/:id/cards',
-      name: 'set-cards',
-      component: SetCardsView,
-    },
-    {
-      path: '/learn/:id',
-      name: 'learn',
-      component: LearnView,
+      path: '/lernen/:setId',
+      name: 'StudySet',
+      component: StudySet,
+      meta: { requiresAuth: true },
     },
   ],
 })
 
-router.beforeEach((to) => {
-  const protectedRoutes = ['dashboard', 'create-set', 'set-cards', 'learn']
-  const hasToken = Boolean(
-    localStorage.getItem('authToken') || sessionStorage.getItem('authToken'),
-  )
+router.beforeEach(async (to) => {
+  const authStore = useAuthStore()
+  await authStore.initialize()
 
-  if (protectedRoutes.includes(String(to.name)) && !hasToken) {
-    return { name: 'login' }
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    return { path: '/login' }
   }
 
-  if (to.name === 'login' && hasToken) {
-    return { name: 'dashboard' }
+  if (to.meta.guestOnly && authStore.isAuthenticated) {
+    return { path: '/dashboard' }
   }
+
+  return true
 })
 
 export default router
