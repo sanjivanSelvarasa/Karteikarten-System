@@ -13,6 +13,7 @@ interface Flashcard {
 }
 
 interface User { username: string; email: string }
+interface StudySession { id: string; setId: number; setTitle: string; total: number; known: number; hard: number; repeat: number; completedAt: string }
 
 const router = useRouter()
 const route = useRoute()
@@ -27,6 +28,7 @@ const repeat = ref(0)
 const hard = ref(0)
 const flipped = ref(false)
 const summaryOpen = ref(false)
+const sessionSaved = ref(false)
 const user = ref<User | null>(readStoredUser())
 
 function readStoredUser(): User | null {
@@ -56,11 +58,32 @@ function flipCard() {
 
 function nextCard() {
   if (current.value >= total.value) {
+    saveCompletedSession()
     summaryOpen.value = true
     return
   }
   current.value += 1
   flipped.value = false
+}
+
+function saveCompletedSession() {
+  if (sessionSaved.value || !total.value) return
+  const setId = Number(route.params.id)
+  const session: StudySession = {
+    id: `${Date.now()}-${setId}`,
+    setId,
+    setTitle: setTitle.value,
+    total: total.value,
+    known: known.value,
+    hard: hard.value,
+    repeat: repeat.value,
+    completedAt: new Date().toISOString(),
+  }
+  try {
+    const sessions = JSON.parse(localStorage.getItem('studyDeckSessions') || '[]') as StudySession[]
+    localStorage.setItem('studyDeckSessions', JSON.stringify([session, ...sessions].slice(0, 100)))
+    sessionSaved.value = true
+  } catch { /* Lernsession bleibt auch ohne lokalen Verlauf nutzbar. */ }
 }
 
 function previousCard() {
@@ -87,6 +110,7 @@ function restartDifficult() {
   hard.value = 0
   flipped.value = false
   summaryOpen.value = false
+  sessionSaved.value = false
 }
 
 function handleKeydown(event: KeyboardEvent) {

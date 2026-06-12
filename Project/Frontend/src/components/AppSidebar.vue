@@ -9,7 +9,7 @@ interface SidebarUser {
 }
 
 const props = withDefaults(defineProps<{
-  active?: 'dashboard' | 'learn' | 'progress'
+  active?: 'dashboard' | 'sets' | 'learn' | 'progress'
   user?: SidebarUser | null
   learnSetId?: number | null
 }>(), {
@@ -45,16 +45,16 @@ const initials = computed(() => props.user?.username
       <RouterLink class="nav-item" :class="{ active: active === 'dashboard' }" to="/dashboard">
         <span><i class="fa-solid fa-table-columns" aria-hidden="true"></i></span>Dashboard
       </RouterLink>
-      <RouterLink class="nav-item" to="/dashboard#sets">
+      <RouterLink class="nav-item" :class="{ active: active === 'sets' }" to="/sets">
         <span><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span>Meine Lernsets
       </RouterLink>
       <RouterLink v-if="learnSetId" class="nav-item" :class="{ active: active === 'learn' }" :to="`/learn/${learnSetId}`">
         <span><i class="fa-solid fa-bolt" aria-hidden="true"></i></span>Lernmodus
       </RouterLink>
-      <RouterLink v-else class="nav-item disabled" to="/dashboard#sets">
+      <RouterLink v-else class="nav-item disabled" to="/sets">
         <span><i class="fa-solid fa-bolt" aria-hidden="true"></i></span>Lernmodus
       </RouterLink>
-      <RouterLink class="nav-item" :class="{ active: active === 'progress' }" to="/dashboard#progress">
+      <RouterLink class="nav-item" :class="{ active: active === 'progress' }" to="/progress">
         <span><i class="fa-solid fa-chart-line" aria-hidden="true"></i></span>Fortschritt
       </RouterLink>
       <button class="nav-item" type="button" @click="emit('profile')">
@@ -66,11 +66,6 @@ const initials = computed(() => props.user?.username
     </nav>
 
     <div class="sidebar-spacer"></div>
-    <section class="upgrade-card">
-      <h2>StudyDeck Pro</h2>
-      <p>Unbegrenzte Lernsets und smarte Wiederholungen freischalten.</p>
-      <button type="button" @click="emit('upgrade')">Jetzt upgraden</button>
-    </section>
 
     <div class="user-mini">
       <span class="avatar">{{ initials }}</span>

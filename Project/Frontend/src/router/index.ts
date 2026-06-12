@@ -6,6 +6,8 @@ import CreateSetView from '@/page/CreateSetView.vue'
 import LearnView from '@/page/LearnView.vue'
 import SetCardsView from '@/page/SetCardsView.vue'
 import Landingpage from '@/page/Landingpage.vue'
+import LearningSetsView from '@/page/LearningSetsView.vue'
+import ProgressView from '@/page/ProgressView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,9 +38,19 @@ const router = createRouter({
       component: CreateSetView,
     },
     {
+      path: '/sets',
+      name: 'learning-sets',
+      component: LearningSetsView,
+    },
+    {
       path: '/sets/:id/cards',
       name: 'set-cards',
       component: SetCardsView,
+    },
+    {
+      path: '/progress',
+      name: 'progress',
+      component: ProgressView,
     },
     {
       path: '/learn/:id',
@@ -49,7 +61,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
-  const protectedRoutes = ['dashboard', 'create-set', 'set-cards', 'learn']
+  const protectedRoutes = ['dashboard', 'learning-sets', 'create-set', 'set-cards', 'progress', 'learn']
   const hasToken = Boolean(
     localStorage.getItem('authToken') || sessionStorage.getItem('authToken'),
   )

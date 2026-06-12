@@ -23,7 +23,7 @@ async function createSet() {
 
   loading.value = true
   try {
-    await apiRequest<ApiResponse<{ learningSet: LearningSet }>>('/api/learning-sets', {
+    const response = await apiRequest<ApiResponse<{ learningSet: LearningSet }>>('/api/learning-sets', {
       method: 'POST',
       body: JSON.stringify({
         title: form.title.trim(),
@@ -31,7 +31,7 @@ async function createSet() {
         isPublic: form.isPublic,
       }),
     })
-    await router.push('/dashboard')
+    await router.push(`/sets/${response.data.learningSet.set_id}/cards`)
   } catch (requestError) {
     error.value = requestError instanceof Error ? requestError.message : 'Lernset konnte nicht erstellt werden.'
   } finally {
