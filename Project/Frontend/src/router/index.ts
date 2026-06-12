@@ -4,6 +4,7 @@ import Login from '@/page/Login.vue'
 import Register from '@/page/Register.vue'
 import CreateSetView from '@/page/CreateSetView.vue'
 import LearnView from '@/page/LearnView.vue'
+import SetCardsView from '@/page/SetCardsView.vue'
 import Landingpage from '@/page/Landingpage.vue'
 
 const router = createRouter({
@@ -35,6 +36,11 @@ const router = createRouter({
       component: CreateSetView,
     },
     {
+      path: '/sets/:id/cards',
+      name: 'set-cards',
+      component: SetCardsView,
+    },
+    {
       path: '/learn/:id',
       name: 'learn',
       component: LearnView,
@@ -43,7 +49,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
-  const protectedRoutes = ['dashboard', 'create-set', 'learn']
+  const protectedRoutes = ['dashboard', 'create-set', 'set-cards', 'learn']
   const hasToken = Boolean(
     localStorage.getItem('authToken') || sessionStorage.getItem('authToken'),
   )
