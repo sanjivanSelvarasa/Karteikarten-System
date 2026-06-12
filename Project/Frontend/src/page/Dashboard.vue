@@ -28,7 +28,7 @@ const newCard = reactive({ question: '', answer: '' })
 const creatingCard = ref(false)
 const settings = reactive({ compact: localStorage.getItem('dashboardCompact') === 'true', notifications: localStorage.getItem('dashboardNotifications') !== 'false' })
 const tones = ['salmon', 'purple', 'accent', 'success']
-const icons = ['▱', '◉', '▥', '⌁']
+const icons = ['fa-solid fa-layer-group', 'fa-solid fa-book-open', 'fa-solid fa-note-sticky', 'fa-solid fa-graduation-cap']
 
 function readStoredUser(): User | null {
   const raw = localStorage.getItem('authUser') || sessionStorage.getItem('authUser')
@@ -41,10 +41,10 @@ const totalCards = computed(() => learningSets.value.reduce((sum, set) => sum + 
 const averageCards = computed(() => learningSets.value.length ? Math.round(totalCards.value / learningSets.value.length) : 0)
 const nextSet = computed(() => learningSets.value.find((set) => set.cards.length > 0) || null)
 const kpis = computed(() => [
-  { icon: '▱', value: String(learningSets.value.length), label: 'Lernsets', note: 'Gesamt', tone: 'salmon' },
-  { icon: '▤', value: String(totalCards.value), label: 'Karteikarten gesamt', note: 'In allen Sets', tone: 'purple' },
-  { icon: '◫', value: String(averageCards.value), label: 'Karten pro Set', note: 'Durchschnitt', tone: 'accent' },
-  { icon: '✓', value: String(learningSets.value.filter((set) => set.cards.length > 0).length), label: 'Bereit zum Lernen', note: 'Mit Karten', tone: 'success' },
+  { icon: 'fa-solid fa-layer-group', value: String(learningSets.value.length), label: 'Lernsets', note: 'Gesamt', tone: 'salmon' },
+  { icon: 'fa-solid fa-note-sticky', value: String(totalCards.value), label: 'Karteikarten gesamt', note: 'In allen Sets', tone: 'purple' },
+  { icon: 'fa-solid fa-calculator', value: String(averageCards.value), label: 'Karten pro Set', note: 'Durchschnitt', tone: 'accent' },
+  { icon: 'fa-solid fa-circle-check', value: String(learningSets.value.filter((set) => set.cards.length > 0).length), label: 'Bereit zum Lernen', note: 'Mit Karten', tone: 'success' },
 ])
 
 const filteredSets = computed(() => {
@@ -54,7 +54,7 @@ const filteredSets = computed(() => {
 })
 
 const activities = computed(() => learningSets.value.slice(0, 4).map((set) => ({
-  icon: '+', text: `Lernset „${set.title}“ aktualisiert`, time: formatDate(set.updated_at), tag: `${set.cards.length} Karten`, tone: set.tone,
+  icon: 'fa-solid fa-pen-to-square', text: `Lernset „${set.title}“ aktualisiert`, time: formatDate(set.updated_at), tag: `${set.cards.length} Karten`, tone: set.tone,
 })))
 const chart = computed(() => {
   const maximum = Math.max(1, ...learningSets.value.map((set) => set.cards.length))
@@ -170,19 +170,19 @@ onMounted(loadDashboard)
   <div class="dashboard">
     <aside class="sidebar" aria-label="Hauptnavigation">
       <RouterLink class="brand" to="/">
-        <span class="brand-mark">✓</span>
+        <span class="brand-mark"><i class="fa-solid fa-feather-pointed" aria-hidden="true"></i></span>
         <span class="brand-name">Hawk<span>Talk</span></span>
       </RouterLink>
 
       <p class="nav-label">Menü</p>
       <nav class="nav">
-        <RouterLink class="nav-item active" to="/dashboard"><span>▦</span>Dashboard</RouterLink>
-        <a class="nav-item" href="#sets"><span>▱</span>Meine Lernsets</a>
-        <RouterLink v-if="nextSet" class="nav-item" :to="`/learn/${nextSet.set_id}`"><span>ϟ</span>Lernmodus</RouterLink>
-        <a v-else class="nav-item disabled" href="#sets"><span>ϟ</span>Lernmodus</a>
-        <a class="nav-item" href="#progress"><span>⌁</span>Fortschritt</a>
-        <button class="nav-item" @click="activeModal = 'profile'"><span>○</span>Profil</button>
-        <button class="nav-item" @click="activeModal = 'settings'"><span>⚙</span>Einstellungen</button>
+        <RouterLink class="nav-item active" to="/dashboard"><span><i class="fa-solid fa-table-columns" aria-hidden="true"></i></span>Dashboard</RouterLink>
+        <a class="nav-item" href="#sets"><span><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span>Meine Lernsets</a>
+        <RouterLink v-if="nextSet" class="nav-item" :to="`/learn/${nextSet.set_id}`"><span><i class="fa-solid fa-bolt" aria-hidden="true"></i></span>Lernmodus</RouterLink>
+        <a v-else class="nav-item disabled" href="#sets"><span><i class="fa-solid fa-bolt" aria-hidden="true"></i></span>Lernmodus</a>
+        <a class="nav-item" href="#progress"><span><i class="fa-solid fa-chart-line" aria-hidden="true"></i></span>Fortschritt</a>
+        <button class="nav-item" @click="activeModal = 'profile'"><span><i class="fa-solid fa-user" aria-hidden="true"></i></span>Profil</button>
+        <button class="nav-item" @click="activeModal = 'settings'"><span><i class="fa-solid fa-gear" aria-hidden="true"></i></span>Einstellungen</button>
       </nav>
 
       <div class="sidebar-spacer"></div>
@@ -194,7 +194,7 @@ onMounted(loadDashboard)
       <div class="user-mini">
         <span class="avatar">{{ initials }}</span>
         <span class="user-info"><strong>{{ user?.username || 'Benutzer' }}</strong><small>{{ user?.email || 'Angemeldet' }}</small></span>
-        <button class="logout" title="Abmelden" @click="logout">↗</button>
+        <button class="logout" title="Abmelden" aria-label="Abmelden" @click="logout"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i></button>
       </div>
     </aside>
 
@@ -206,12 +206,12 @@ onMounted(loadDashboard)
         </div>
         <div class="topbar-actions">
           <label class="search">
-            <span>⌕</span>
+            <span><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></span>
             <input v-model="search" type="search" placeholder="Lernsets durchsuchen …">
           </label>
           <div class="notification-wrap">
             <button class="icon-button" title="Benachrichtigungen" @click="notificationsOpen = !notificationsOpen">
-              ♢<i></i>
+              <i class="fa-solid fa-bell" aria-hidden="true"></i><span class="notification-dot"></span>
             </button>
             <Transition name="drop">
               <div v-if="notificationsOpen && settings.notifications" class="notification-popover">
@@ -231,7 +231,7 @@ onMounted(loadDashboard)
         <div v-if="loading" class="dashboard-loading"><span></span>Lernsets werden geladen …</div>
         <section class="kpi-grid" aria-label="Übersicht">
           <article v-for="kpi in kpis" :key="kpi.label" class="kpi" :class="kpi.tone">
-            <div class="kpi-top"><span class="kpi-icon">{{ kpi.icon }}</span><span class="trend">{{ kpi.note }}</span></div>
+            <div class="kpi-top"><span class="kpi-icon"><i :class="kpi.icon" aria-hidden="true"></i></span><span class="trend">{{ kpi.note }}</span></div>
             <strong>{{ kpi.value }}</strong><p>{{ kpi.label }}</p>
           </article>
         </section>
@@ -240,21 +240,21 @@ onMounted(loadDashboard)
           <div>
             <div class="section-head">
               <h2>Meine Lernsets</h2>
-              <RouterLink class="primary-button" to="/sets/create">+ Neues Lernset erstellen</RouterLink>
+              <RouterLink class="primary-button" to="/sets/create"><i class="fa-solid fa-plus" aria-hidden="true"></i> Neues Lernset erstellen</RouterLink>
             </div>
             <div v-if="!loading && filteredSets.length" class="set-grid">
               <article v-for="set in filteredSets" :key="set.set_id" class="set-card">
                 <div class="set-head">
-                  <span class="subject-icon" :class="set.tone">{{ set.icon }}</span>
+                  <span class="subject-icon" :class="set.tone"><i :class="set.icon" aria-hidden="true"></i></span>
                   <div><h3>{{ set.title }}</h3><p>{{ set.description || 'Keine Beschreibung' }}</p></div>
                 </div>
-                <div class="set-meta"><span>▤ {{ set.cards.length }} Karten</span><span>◷ {{ formatDate(set.updated_at) }}</span></div>
+                <div class="set-meta"><span><i class="fa-solid fa-note-sticky" aria-hidden="true"></i> {{ set.cards.length }} Karten</span><span><i class="fa-solid fa-clock" aria-hidden="true"></i> {{ formatDate(set.updated_at) }}</span></div>
                 <div class="progress-row"><span>{{ set.is_public ? 'Öffentlich' : 'Privat' }}</span><strong>{{ set.cards.length ? 'Lernbereit' : 'Noch leer' }}</strong></div>
                 <div class="progress-bar"><i :style="{ width: set.cards.length ? '100%' : '0%' }"></i></div>
                 <div class="set-actions">
-                  <RouterLink v-if="set.cards.length" class="learn-button" :to="`/learn/${set.set_id}`">▷ Lernen</RouterLink>
+                  <RouterLink v-if="set.cards.length" class="learn-button" :to="`/learn/${set.set_id}`"><i class="fa-solid fa-play" aria-hidden="true"></i> Lernen</RouterLink>
                   <button v-else class="learn-button disabled" disabled>Keine Karten</button>
-                  <button @click="openDetails(set)">Öffnen</button><button class="edit" title="Bearbeiten" @click="openEdit(set)">✎</button>
+                  <button @click="openDetails(set)">Öffnen</button><button class="edit" title="Bearbeiten" aria-label="Bearbeiten" @click="openEdit(set)"><i class="fa-solid fa-pen" aria-hidden="true"></i></button>
                 </div>
               </article>
             </div>
@@ -267,17 +267,17 @@ onMounted(loadDashboard)
           <aside class="today-column">
             <div class="section-head"><h2>Heute lernen</h2></div>
             <section v-if="nextSet && !focusDismissed" class="focus-card">
-              <span class="eyebrow">ϟ Nächste Einheit</span>
+              <span class="eyebrow"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Nächste Einheit</span>
               <h3>{{ nextSet.title }}</h3><p>{{ nextSet.description || 'Bereit für deine nächste Runde' }}</p>
               <div class="focus-stats"><div><span>Karten</span><strong>{{ nextSet.cards.length }}</strong></div><div><span>Lernzeit</span><strong>~{{ Math.max(1, Math.ceil(nextSet.cards.length * 0.4)) }} Min</strong></div></div>
               <div class="focus-progress"><i></i></div><small>Das Lernset ist vollständig geladen.</small>
-              <div class="focus-actions"><RouterLink :to="`/learn/${nextSet.set_id}`">▷ Lernsession starten</RouterLink><button @click="dismissFocus">Später</button></div>
+              <div class="focus-actions"><RouterLink :to="`/learn/${nextSet.set_id}`"><i class="fa-solid fa-play" aria-hidden="true"></i> Lernsession starten</RouterLink><button @click="dismissFocus">Später</button></div>
             </section>
             <section v-else-if="!loading" class="focus-empty">{{ focusDismissed ? 'Lerneinheit für diese Sitzung ausgeblendet.' : 'Füge einem Lernset Karten hinzu, um zu starten.' }}</section>
             <div class="reminders">
-              <RouterLink v-if="nextSet" :to="`/learn/${nextSet.set_id}`"><span class="reminder-icon salmon">▤</span><span><strong>{{ nextSet.cards.length }} Karten bereit</strong><small>{{ nextSet.title }}</small></span><b>›</b></RouterLink>
-              <a href="#sets"><span class="reminder-icon purple">!</span><span><strong>{{ learningSets.filter(set => !set.cards.length).length }} leere Lernsets</strong><small>Karten ergänzen</small></span><b>›</b></a>
-              <RouterLink to="/sets/create"><span class="reminder-icon accent">+</span><span><strong>Neues Lernset</strong><small>Weiteres Thema anlegen</small></span><b>›</b></RouterLink>
+              <RouterLink v-if="nextSet" :to="`/learn/${nextSet.set_id}`"><span class="reminder-icon salmon"><i class="fa-solid fa-note-sticky" aria-hidden="true"></i></span><span><strong>{{ nextSet.cards.length }} Karten bereit</strong><small>{{ nextSet.title }}</small></span><b><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></b></RouterLink>
+              <a href="#sets"><span class="reminder-icon purple"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></span><span><strong>{{ learningSets.filter(set => !set.cards.length).length }} leere Lernsets</strong><small>Karten ergänzen</small></span><b><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></b></a>
+              <RouterLink to="/sets/create"><span class="reminder-icon accent"><i class="fa-solid fa-plus" aria-hidden="true"></i></span><span><strong>Neues Lernset</strong><small>Weiteres Thema anlegen</small></span><b><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></b></RouterLink>
             </div>
           </aside>
         </section>
@@ -302,7 +302,7 @@ onMounted(loadDashboard)
             <div class="section-head"><h2>Letzte Aktivitäten</h2><span>Heute</span></div>
             <article v-if="activities.length" class="panel activity-panel">
               <div v-for="activity in activities" :key="activity.text" class="activity-item">
-                <span class="activity-icon" :class="activity.tone">{{ activity.icon }}</span>
+                <span class="activity-icon" :class="activity.tone"><i :class="activity.icon" aria-hidden="true"></i></span>
                 <span class="activity-copy"><strong>{{ activity.text }}</strong><small>{{ activity.time }}</small></span>
                 <span class="activity-tag" :class="activity.tone">{{ activity.tag }}</span>
               </div>
@@ -316,16 +316,16 @@ onMounted(loadDashboard)
     <Transition name="modal">
       <div v-if="activeModal" class="modal-backdrop" @click.self="closeModal">
         <section class="modal-card" role="dialog" aria-modal="true">
-          <button class="modal-close" title="Schließen" @click="closeModal">×</button>
+          <button class="modal-close" title="Schließen" aria-label="Schließen" @click="closeModal"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
 
           <template v-if="activeModal === 'details' && selectedSet">
-            <span class="modal-mark" :class="selectedSet.tone">{{ selectedSet.icon }}</span>
+            <span class="modal-mark" :class="selectedSet.tone"><i :class="selectedSet.icon" aria-hidden="true"></i></span>
             <h2>{{ selectedSet.title }}</h2>
             <p>{{ selectedSet.description || 'Keine Beschreibung vorhanden.' }}</p>
             <div class="detail-stats"><div><strong>{{ selectedSet.cards.length }}</strong><span>Karten</span></div><div><strong>{{ selectedSet.is_public ? 'Ja' : 'Nein' }}</strong><span>Öffentlich</span></div></div>
             <div v-if="selectedSet.cards.length" class="card-preview">
               <strong>Karten</strong>
-              <div v-for="card in selectedSet.cards" :key="card.flashcard_id"><span>{{ card.question }}</span><small>{{ card.answer }}</small><button title="Karte löschen" @click="removeCard(card)">×</button></div>
+              <div v-for="card in selectedSet.cards" :key="card.flashcard_id"><span>{{ card.question }}</span><small>{{ card.answer }}</small><button title="Karte löschen" aria-label="Karte löschen" @click="removeCard(card)"><i class="fa-solid fa-trash" aria-hidden="true"></i></button></div>
             </div>
             <form class="quick-card-form" @submit.prevent="addCard">
               <strong>Neue Karte</strong>
@@ -339,7 +339,7 @@ onMounted(loadDashboard)
           </template>
 
           <template v-else-if="activeModal === 'edit' && selectedSet">
-            <span class="modal-mark purple">✎</span><h2>Lernset bearbeiten</h2><p>Ändere Titel, Beschreibung oder Sichtbarkeit.</p>
+            <span class="modal-mark purple"><i class="fa-solid fa-pen" aria-hidden="true"></i></span><h2>Lernset bearbeiten</h2><p>Ändere Titel, Beschreibung oder Sichtbarkeit.</p>
             <form class="modal-form" @submit.prevent="saveSet">
               <label>Titel<input v-model="editForm.title" maxlength="100"></label>
               <label>Beschreibung<textarea v-model="editForm.description" rows="4"></textarea></label>
@@ -357,7 +357,7 @@ onMounted(loadDashboard)
           </template>
 
           <template v-else-if="activeModal === 'settings'">
-            <span class="modal-mark accent">⚙</span><h2>Dashboard-Einstellungen</h2><p>Diese Einstellungen werden lokal im Browser gespeichert.</p>
+            <span class="modal-mark accent"><i class="fa-solid fa-gear" aria-hidden="true"></i></span><h2>Dashboard-Einstellungen</h2><p>Diese Einstellungen werden lokal im Browser gespeichert.</p>
             <div class="settings-list">
               <label><span><strong>Kompakte Ansicht</strong><small>Weniger Abstand zwischen Inhalten</small></span><input v-model="settings.compact" type="checkbox"></label>
               <label><span><strong>Benachrichtigungen</strong><small>Hinweise im Dashboard anzeigen</small></span><input v-model="settings.notifications" type="checkbox"></label>
@@ -366,7 +366,7 @@ onMounted(loadDashboard)
           </template>
 
           <template v-else>
-            <span class="modal-mark salmon">★</span><h2>HawkTalk Pro</h2><p>Das Projekt hat aktuell keine Bezahlfunktion. Alle vorhandenen Lernfunktionen bleiben frei nutzbar.</p>
+            <span class="modal-mark salmon"><i class="fa-solid fa-star" aria-hidden="true"></i></span><h2>HawkTalk Pro</h2><p>Das Projekt hat aktuell keine Bezahlfunktion. Alle vorhandenen Lernfunktionen bleiben frei nutzbar.</p>
             <button class="modal-primary" @click="closeModal">Verstanden</button>
           </template>
         </section>
@@ -378,7 +378,7 @@ onMounted(loadDashboard)
 <style scoped>
 .dashboard { --shadow-sm: 0 2px 8px #1f29370a; --shadow-md: 0 6px 18px #8f89e824; min-height: 100vh; display: flex; color: var(--color-text); background: var(--color-bg); font-family: Nunito, Inter, system-ui, sans-serif; font-weight: 600; }
 button { cursor: pointer; border: 0; font: inherit; }.sidebar { position: sticky; top: 0; display: flex; width: 264px; height: 100vh; flex: 0 0 264px; flex-direction: column; padding: 26px 18px; border-right: 1px solid var(--color-border-purple); background: var(--color-bg-soft); }.brand { display: flex; align-items: center; gap: 12px; padding: 6px 8px 26px; }.brand-mark { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 13px; color: white; background: linear-gradient(135deg,var(--color-salmon),var(--color-periwinkle)); box-shadow: var(--shadow-md); font-weight: 900; }.brand-name { font-size: 21px; font-weight: 900; }.brand-name span { color: var(--color-salmon-dark); }.nav-label { margin: 6px 0 0; padding: 6px 12px; color: var(--color-text-muted); font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }.nav { display: flex; flex-direction: column; gap: 4px; }.nav-item { display: flex; align-items: center; gap: 13px; padding: 11px 13px; border-radius: 14px; color: var(--color-text-muted); font-size: 15px; font-weight: 700; transition: .18s; }.nav-item > span { width: 21px; text-align: center; }.nav-item:hover { color: var(--color-text); background: var(--color-periwinkle-light); }.nav-item.active { color: white; background: var(--color-periwinkle); box-shadow: 0 6px 16px #8f89e859; }.sidebar-spacer { flex: 1; }.upgrade-card { margin-bottom: 16px; padding: 16px; border: 1px solid var(--color-border-purple); border-radius: 20px; background: linear-gradient(140deg,var(--color-salmon-light),var(--color-periwinkle-light)); }.upgrade-card h2 { margin: 0 0 4px; font-size: 14px; }.upgrade-card p { margin: 0 0 12px; color: var(--color-text-muted); font-size: 12px; }.upgrade-card button { width: 100%; padding: 9px; border-radius: 10px; color: var(--color-salmon-dark); background: white; font-weight: 800; }.user-mini { display: flex; align-items: center; gap: 11px; padding: 10px; border: 1px solid var(--color-border-purple); border-radius: 14px; background: white; }.avatar { display: grid; width: 38px; height: 38px; flex: 0 0 38px; place-items: center; border-radius: 50%; color: white; background: linear-gradient(135deg,var(--color-periwinkle-dark),var(--color-salmon)); font-size: 13px; font-weight: 900; }.user-info { display: flex; min-width: 0; flex: 1; flex-direction: column; }.user-info strong { overflow: hidden; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }.user-info small { color: var(--color-text-muted); font-size: 11px; }.logout { color: var(--color-text-muted); font-size: 18px; }
-.main { min-width: 0; flex: 1; }.topbar { position: sticky; z-index: 20; top: 0; display: flex; align-items: center; gap: 24px; padding: 18px 34px; border-bottom: 1px solid var(--color-border-salmon); background: #ffffffd1; backdrop-filter: blur(12px); }.greeting h1 { margin: 0; font-size: 22px; font-weight: 900; letter-spacing: -.02em; }.greeting p { margin: 0; color: var(--color-text-muted); font-size: 14px; }.topbar-actions { position: relative; display: flex; margin-left: auto; align-items: center; gap: 14px; }.search { position: relative; display: flex; align-items: center; }.search span { position: absolute; left: 14px; color: var(--color-text-muted); font-size: 21px; }.search input { width: 268px; padding: 11px 14px 11px 42px; border: 1px solid var(--color-border-purple); border-radius: 14px; color: var(--color-text); background: var(--color-bg-soft); font: inherit; font-size: 14px; }.search input:focus { outline: 0; border-color: var(--color-periwinkle); background: white; box-shadow: 0 0 0 4px var(--color-periwinkle-light); }.notification-wrap { position: relative; }.icon-button { position: relative; display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid var(--color-border-purple); border-radius: 14px; color: var(--color-text); background: white; font-size: 24px; }.icon-button i { position: absolute; top: 8px; right: 9px; width: 9px; height: 9px; border: 2px solid white; border-radius: 50%; background: var(--color-salmon); }.notification-popover { position: absolute; top: 52px; right: 0; width: 280px; padding: 16px; border: 1px solid var(--color-border-purple); border-radius: 14px; background: white; box-shadow: 0 16px 38px #1f293726; }.notification-popover p { margin: 6px 0 10px; color: var(--color-text-muted); font-size: 13px; }.notification-popover a { color: var(--color-periwinkle-dark); font-size: 13px; font-weight: 900; }.drop-enter-active,.drop-leave-active { transition: .16s; }.drop-enter-from,.drop-leave-to { transform: translateY(-5px); opacity: 0; }
+.main { min-width: 0; flex: 1; }.topbar { position: sticky; z-index: 20; top: 0; display: flex; align-items: center; gap: 24px; padding: 18px 34px; border-bottom: 1px solid var(--color-border-salmon); background: #ffffffd1; backdrop-filter: blur(12px); }.greeting h1 { margin: 0; font-size: 22px; font-weight: 900; letter-spacing: -.02em; }.greeting p { margin: 0; color: var(--color-text-muted); font-size: 14px; }.topbar-actions { position: relative; display: flex; margin-left: auto; align-items: center; gap: 14px; }.search { position: relative; display: flex; align-items: center; }.search span { position: absolute; left: 14px; color: var(--color-text-muted); font-size: 21px; }.search input { width: 268px; padding: 11px 14px 11px 42px; border: 1px solid var(--color-border-purple); border-radius: 14px; color: var(--color-text); background: var(--color-bg-soft); font: inherit; font-size: 14px; }.search input:focus { outline: 0; border-color: var(--color-periwinkle); background: white; box-shadow: 0 0 0 4px var(--color-periwinkle-light); }.notification-wrap { position: relative; }.icon-button { position: relative; display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid var(--color-border-purple); border-radius: 14px; color: var(--color-text); background: white; font-size: 20px; }.notification-dot { position: absolute; top: 8px; right: 9px; width: 9px; height: 9px; border: 2px solid white; border-radius: 50%; background: var(--color-salmon); }.notification-popover { position: absolute; top: 52px; right: 0; width: 280px; padding: 16px; border: 1px solid var(--color-border-purple); border-radius: 14px; background: white; box-shadow: 0 16px 38px #1f293726; }.notification-popover p { margin: 6px 0 10px; color: var(--color-text-muted); font-size: 13px; }.notification-popover a { color: var(--color-periwinkle-dark); font-size: 13px; font-weight: 900; }.drop-enter-active,.drop-leave-active { transition: .16s; }.drop-enter-from,.drop-leave-to { transform: translateY(-5px); opacity: 0; }
 .content { display: flex; padding: 30px 34px 44px; flex-direction: column; gap: 28px; }.kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }.kpi { padding: 20px; border: 1px solid var(--color-border-salmon); border-radius: 20px; background: white; box-shadow: var(--shadow-sm); transition: .18s; }.kpi:hover,.set-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }.kpi.purple,.kpi.success { border-color: var(--color-border-purple); }.kpi-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }.kpi-icon { display: grid; width: 46px; height: 46px; place-items: center; border-radius: 13px; font-size: 22px; font-weight: 900; }.kpi.salmon .kpi-icon { color: var(--color-salmon-dark); background: var(--color-salmon-light); }.kpi.purple .kpi-icon { color: var(--color-periwinkle-dark); background: var(--color-periwinkle-light); }.kpi.accent .kpi-icon { color: #d98a2b; background: #ffeccf; }.kpi.success .kpi-icon { color: #16a34a; background: #dcfce7; }.trend { padding: 4px 8px; border-radius: 8px; color: var(--color-success); background: #ecfdf3; font-size: 12px; font-weight: 900; }.kpi > strong { font-size: 32px; font-weight: 900; line-height: 1; }.kpi > p { margin: 6px 0 0; color: var(--color-text-muted); font-size: 13px; }
 .main-grid { display: grid; grid-template-columns: minmax(0,1.85fr) minmax(290px,1fr); gap: 24px; align-items: start; }.section-head { display: flex; min-height: 43px; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }.section-head h2 { margin: 0; font-size: 19px; font-weight: 900; }.section-head > span { color: var(--color-text-muted); font-size: 13px; }.primary-button { padding: 11px 18px; border-radius: 14px; color: white; background: linear-gradient(135deg,var(--color-salmon),var(--color-salmon-dark)); box-shadow: 0 10px 24px #e66f6847; font-size: 14px; font-weight: 900; }.set-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; }.set-card { display: flex; padding: 18px; flex-direction: column; border: 1px solid var(--color-border-purple); border-radius: 20px; background: white; box-shadow: var(--shadow-sm); transition: .18s; }.set-head { display: flex; align-items: center; gap: 12px; margin-bottom: 13px; }.subject-icon { display: grid; width: 44px; height: 44px; flex: 0 0 44px; place-items: center; border-radius: 13px; font-size: 21px; font-weight: 900; }.subject-icon.salmon,.reminder-icon.salmon,.activity-icon.salmon { color: var(--color-salmon-dark); background: var(--color-salmon-light); }.subject-icon.purple,.reminder-icon.purple,.activity-icon.purple { color: var(--color-periwinkle-dark); background: var(--color-periwinkle-light); }.subject-icon.accent,.reminder-icon.accent,.activity-icon.accent { color: #d98a2b; background: #ffeccf; }.subject-icon.success,.activity-icon.success { color: #16a34a; background: #dcfce7; }.set-head h3 { margin: 0; font-size: 16px; font-weight: 900; }.set-head p { margin: 0; color: var(--color-text-muted); font-size: 12px; }.set-meta { display: flex; gap: 16px; margin-bottom: 13px; color: var(--color-text-muted); font-size: 12px; font-weight: 700; }.progress-row { display: flex; justify-content: space-between; margin-bottom: 6px; color: var(--color-text-muted); font-size: 12px; }.progress-row strong { color: var(--color-text); }.progress-bar { height: 8px; margin-bottom: 16px; overflow: hidden; border-radius: 99px; background: var(--color-bg-soft); }.progress-bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg,var(--color-salmon),var(--color-periwinkle)); }.set-actions { display: flex; gap: 8px; margin-top: auto; }.set-actions a,.set-actions button { display: flex; min-height: 38px; flex: 1; align-items: center; justify-content: center; border-radius: 10px; color: var(--color-text); background: var(--color-bg-soft); font-size: 13px; font-weight: 900; }.set-actions .learn-button { color: white; background: var(--color-periwinkle); }.set-actions .edit { flex: 0 0 38px; }.empty-state { padding: 42px; border: 1px dashed var(--color-border-purple); border-radius: 20px; color: var(--color-text-muted); background: white; text-align: center; }
 .today-column { display: flex; flex-direction: column; gap: 20px; }.today-column .section-head { margin-bottom: -2px; }.focus-card { position: relative; overflow: hidden; padding: 24px; border-radius: 26px; color: white; background: radial-gradient(120% 120% at 0 0,#ffffff2e,transparent 50%),linear-gradient(150deg,var(--color-periwinkle-dark),var(--color-salmon)); box-shadow: 0 12px 32px #8f89e829; }.focus-card::after { position: absolute; top: -40px; right: -40px; width: 150px; height: 150px; border: 22px solid #ffffff14; border-radius: 50%; content: ''; }.eyebrow { font-size: 11px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }.focus-card h3 { margin: 18px 0 0; font-size: 25px; }.focus-card > p { margin: 0; opacity: .82; }.focus-stats { display: grid; margin: 22px 0 16px; grid-template-columns: 1fr 1fr; gap: 10px; }.focus-stats div { padding: 11px; border-radius: 12px; background: #ffffff1f; }.focus-stats span,.focus-stats strong { display: block; }.focus-stats span { font-size: 11px; opacity: .78; }.focus-stats strong { margin-top: 2px; }.focus-progress { height: 7px; overflow: hidden; border-radius: 99px; background: #ffffff38; }.focus-progress i { display: block; width: 38%; height: 100%; border-radius: inherit; background: white; }.focus-card > small { display: block; margin-top: 7px; opacity: .8; }.focus-actions { display: flex; gap: 8px; margin-top: 20px; }.focus-actions a,.focus-actions button { display: flex; min-height: 42px; align-items: center; justify-content: center; border-radius: 11px; font-size: 13px; font-weight: 900; }.focus-actions a { flex: 1; color: var(--color-periwinkle-dark); background: white; }.focus-actions button { padding: 0 15px; color: white; background: #ffffff1f; }.reminders { display: flex; flex-direction: column; gap: 10px; }.reminders > a { display: flex; align-items: center; gap: 11px; padding: 12px; border: 1px solid var(--color-border-purple); border-radius: 14px; background: white; }.reminder-icon { display: grid; width: 38px; height: 38px; place-items: center; border-radius: 11px; font-weight: 900; }.reminders a > span:nth-child(2) { display: flex; flex: 1; flex-direction: column; }.reminders strong { font-size: 13px; }.reminders small { color: var(--color-text-muted); font-size: 11px; }.reminders b { color: var(--color-text-muted); font-size: 21px; }

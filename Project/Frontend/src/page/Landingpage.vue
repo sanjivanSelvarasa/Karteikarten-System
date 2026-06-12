@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 
+defineOptions({ name: 'LandingPage' })
+
 type Variant = 'salmon' | 'peri' | 'acc'
 
 interface NavLink { label: string; href: string }
@@ -9,15 +11,14 @@ interface Benefit { title: string; desc: string }
 interface ActiveSet { title: string; meta: string; pct: number; variant: Variant; icon: string }
 interface StudyStat { num: string; label: string; variant: Variant; icon: string }
 
-/* Inner SVG markup (24x24, stroke-based). Wrapped by a consistent <svg> in the template. */
 const ICON = {
-  cardStack: '<rect x="3" y="6" width="14" height="12" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v10"/>',
-  cardLines: '<rect x="3" y="7" width="13" height="14" rx="2"/><path d="M7 4h11a2 2 0 0 1 2 2v11"/><path d="M7 12h5M7 16h7"/>',
-  target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>',
-  chart: '<path d="M4 19V5M4 19h16"/><path d="M8 16l3-4 3 2 5-7"/>',
-  list: '<path d="M4 4h16v4H4zM4 12h10v4H4z"/><path d="M4 4v16"/>',
-  clock: '<path d="M12 2v6l4 2"/><circle cx="12" cy="13" r="8"/>',
-  warning: '<path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3l-8-14a2 2 0 0 0-3.4 0z"/>',
+  cardStack: 'fa-solid fa-layer-group',
+  cardLines: 'fa-solid fa-note-sticky',
+  target: 'fa-solid fa-bullseye',
+  chart: 'fa-solid fa-chart-line',
+  list: 'fa-solid fa-list',
+  clock: 'fa-solid fa-clock',
+  warning: 'fa-solid fa-triangle-exclamation',
 } as const
 
 const navLinks: NavLink[] = [
@@ -87,13 +88,7 @@ onBeforeUnmount(() => observer?.disconnect())
     <header class="navbar">
       <div class="container nav-inner">
         <a href="#" class="brand" aria-label="HawkTalk Startseite">
-          <span class="brand-mark">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 3c-3.5 0-6 2.2-6 5.5 0 1.6.6 2.9 1.6 4L5 19l5.2-1.6c.6.1 1.2.2 1.8.2 3.5 0 6-2.4 6-5.6" />
-              <path d="M18 6.5c1.2 0 2-.9 2-2-1 .2-1.6.6-2 1.2" />
-              <circle cx="10" cy="9" r="1" fill="currentColor" stroke="none" />
-            </svg>
-          </span>
+          <span class="brand-mark"><i class="fa-solid fa-feather-pointed" aria-hidden="true"></i></span>
           HawkTalk
         </a>
 
@@ -113,15 +108,15 @@ onBeforeUnmount(() => observer?.disconnect())
       <div class="hero-deco" aria-hidden="true">
         <span class="blob b1" />
         <span class="blob b2" />
-        <svg class="spark s1" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" /></svg>
-        <svg class="spark s2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" /></svg>
-        <svg class="spark s3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" /></svg>
+        <i class="fa-solid fa-sparkles spark s1"></i>
+        <i class="fa-solid fa-sparkles spark s2"></i>
+        <i class="fa-solid fa-sparkles spark s3"></i>
       </div>
 
       <div class="container hero-grid">
         <div class="hero-copy reveal">
           <span class="eyebrow">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" /></svg>
+            <i class="fa-solid fa-sparkles" aria-hidden="true"></i>
             Digitale Karteikarten
           </span>
           <h1>Lerne smarter mit <span class="grad">digitalen Karteikarten</span></h1>
@@ -129,11 +124,11 @@ onBeforeUnmount(() => observer?.disconnect())
 
           <div class="hero-cta">
             <a href="#" class="btn btn-primary">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14" /></svg>
+              <i class="fa-solid fa-plus" aria-hidden="true"></i>
               Jetzt Lernset erstellen
             </a>
             <a href="#lernmodus" class="btn btn-secondary">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4l13 8-13 8z" /></svg>
+              <i class="fa-solid fa-play" aria-hidden="true"></i>
               Demo ansehen
             </a>
           </div>
@@ -149,15 +144,13 @@ onBeforeUnmount(() => observer?.disconnect())
         <!-- App Preview Mockup -->
         <div class="preview reveal" aria-label="HawkTalk App-Vorschau">
           <div class="preview-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+            <i class="fa-solid fa-check" aria-hidden="true"></i>
             Gespeichert
           </div>
 
           <div class="preview-bar">
             <div class="left">
-              <span class="brand-mark sm">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-3.5 0-6 2.2-6 5.5 0 1.6.6 2.9 1.6 4L5 19l5.2-1.6c.6.1 1.2.2 1.8.2 3.5 0 6-2.4 6-5.6" /><circle cx="10" cy="9" r="1" fill="currentColor" stroke="none" /></svg>
-              </span>
+              <span class="brand-mark sm"><i class="fa-solid fa-feather-pointed" aria-hidden="true"></i></span>
               Mein Lernset
             </div>
             <div class="dot-row"><i class="dot-salmon" /><i class="dot-peri" /><i class="dot-acc" /></div>
@@ -166,7 +159,7 @@ onBeforeUnmount(() => observer?.disconnect())
           <div class="lernset-card">
             <div class="lernset-head">
               <div class="lernset-ico">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="ICON.cardStack" />
+                <i :class="ICON.cardStack" aria-hidden="true"></i>
               </div>
               <div>
                 <h4>Datenbanken Grundlagen</h4>
@@ -188,13 +181,13 @@ onBeforeUnmount(() => observer?.disconnect())
           <div class="stat-row">
             <div class="stat">
               <div class="stat-ico peri">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" v-html="ICON.chart" />
+                <i :class="ICON.chart" aria-hidden="true"></i>
               </div>
               <div><div class="num">24</div><div class="lbl">Heute gelernt</div></div>
             </div>
             <div class="stat">
               <div class="stat-ico succ">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8" /><path d="M21 7v5h-5" /></svg>
+                <i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i>
               </div>
               <div><div class="num">85%</div><div class="lbl">Trefferquote</div></div>
             </div>
@@ -215,7 +208,7 @@ onBeforeUnmount(() => observer?.disconnect())
         <div class="feature-grid">
           <article v-for="feature in features" :key="feature.title" class="feature-card reveal">
             <div class="feature-ico" :class="feature.variant">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="feature.icon" />
+              <i :class="feature.icon" aria-hidden="true"></i>
             </div>
             <h3>{{ feature.title }}</h3>
             <p>{{ feature.desc }}</p>
@@ -235,7 +228,7 @@ onBeforeUnmount(() => observer?.disconnect())
           <div class="benefit-list">
             <div v-for="benefit in benefits" :key="benefit.title" class="benefit-item">
               <span class="benefit-check">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+                <i class="fa-solid fa-check" aria-hidden="true"></i>
               </span>
               <div class="b-text"><strong>{{ benefit.title }}</strong><span>{{ benefit.desc }}</span></div>
             </div>
@@ -250,7 +243,7 @@ onBeforeUnmount(() => observer?.disconnect())
 
           <div v-for="set in activeSets" :key="set.title" class="vv-set">
             <div class="vv-ico" :class="`ico--${set.variant}`">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="set.icon" />
+              <i :class="set.icon" aria-hidden="true"></i>
             </div>
             <div class="vv-body">
               <strong>{{ set.title }}</strong>
@@ -293,7 +286,7 @@ onBeforeUnmount(() => observer?.disconnect())
                   <div class="flip-tag">Frage</div>
                   <div class="flip-q">Was ist eine relationale Datenbank?</div>
                   <div class="flip-hint">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6" /><path d="M3 12a9 9 0 0 1 15-6.7L21 8" /><path d="M3 22v-6h6" /><path d="M21 12a9 9 0 0 1-15 6.7L3 16" /></svg>
+                    <i class="fa-solid fa-rotate" aria-hidden="true"></i>
                     Karte umdrehen
                   </div>
                 </div>
@@ -306,15 +299,15 @@ onBeforeUnmount(() => observer?.disconnect())
 
             <div class="rate-row">
               <button type="button" class="rate-btn no">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                 Nicht gewusst
               </button>
               <button type="button" class="rate-btn almost">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /></svg>
+                <i class="fa-solid fa-minus" aria-hidden="true"></i>
                 Fast
               </button>
               <button type="button" class="rate-btn yes">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+                <i class="fa-solid fa-check" aria-hidden="true"></i>
                 Gewusst
               </button>
             </div>
@@ -323,7 +316,7 @@ onBeforeUnmount(() => observer?.disconnect())
           <div class="lm-info">
             <div v-for="stat in studyStats" :key="stat.label" class="info-card">
               <div class="info-ico" :class="stat.variant">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="stat.icon" />
+                <i :class="stat.icon" aria-hidden="true"></i>
               </div>
               <div><div class="i-num">{{ stat.num }}</div><div class="i-lbl">{{ stat.label }}</div></div>
             </div>
@@ -339,16 +332,16 @@ onBeforeUnmount(() => observer?.disconnect())
           <div class="cta-deco" aria-hidden="true">
             <span class="cta-ring r1" />
             <span class="cta-ring r2" />
-            <svg class="cd1" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" /></svg>
-            <svg class="cd2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="ICON.cardStack" />
-            <svg class="cd3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" /></svg>
-            <svg class="cd4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5" /></svg>
+            <i class="fa-solid fa-sparkles cd1"></i>
+            <i class="fa-solid fa-layer-group cd2"></i>
+            <i class="fa-solid fa-sparkles cd3"></i>
+            <i class="fa-solid fa-check cd4"></i>
           </div>
           <div class="cta-content">
             <h2>Bereit, effizienter zu lernen?</h2>
             <p>Starte jetzt kostenlos und erstelle dein erstes Lernset.</p>
             <a href="#" class="btn btn-light">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14" /></svg>
+              <i class="fa-solid fa-plus" aria-hidden="true"></i>
               Kostenlos starten
             </a>
           </div>
@@ -362,9 +355,7 @@ onBeforeUnmount(() => observer?.disconnect())
         <div class="footer-top">
           <div class="footer-brand">
             <a href="#" class="brand">
-              <span class="brand-mark">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-3.5 0-6 2.2-6 5.5 0 1.6.6 2.9 1.6 4L5 19l5.2-1.6c.6.1 1.2.2 1.8.2 3.5 0 6-2.4 6-5.6" /><path d="M18 6.5c1.2 0 2-.9 2-2-1 .2-1.6.6-2 1.2" /><circle cx="10" cy="9" r="1" fill="currentColor" stroke="none" /></svg>
-              </span>
+              <span class="brand-mark"><i class="fa-solid fa-feather-pointed" aria-hidden="true"></i></span>
               HawkTalk
             </a>
             <p>Digitale Karteikarten für Schüler und Lernende. Erstelle eigene Lernsets, wiederhole personalisiert und behalte deinen Fortschritt im Blick.</p>
@@ -470,7 +461,7 @@ onBeforeUnmount(() => observer?.disconnect())
   transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease);
   white-space: nowrap;
 }
-.btn svg { width: 18px; height: 18px; }
+.btn > i { width: 18px; font-size: 18px; text-align: center; }
 .btn-primary {
   color: var(--color-text-light);
   background: linear-gradient(135deg, var(--color-salmon) 0%, var(--color-salmon-dark) 100%);
@@ -507,9 +498,9 @@ onBeforeUnmount(() => observer?.disconnect())
   background: linear-gradient(140deg, var(--color-salmon) 0%, var(--color-periwinkle) 100%);
   box-shadow: var(--shadow-soft); flex-shrink: 0;
 }
-.brand-mark svg { width: 24px; height: 24px; color: #fff; }
+.brand-mark i { color: #fff; font-size: 22px; }
 .brand-mark.sm { width: 30px; height: 30px; border-radius: 9px; }
-.brand-mark.sm svg { width: 17px; height: 17px; }
+.brand-mark.sm i { font-size: 15px; }
 .nav-links { display: flex; align-items: center; gap: 4px; }
 .nav-links a {
   font-weight: 700; font-size: 0.98rem; color: var(--color-text-muted);
@@ -530,9 +521,9 @@ onBeforeUnmount(() => observer?.disconnect())
 .blob.b1 { width: 360px; height: 360px; background: var(--color-salmon-light); top: -120px; right: 8%; }
 .blob.b2 { width: 320px; height: 320px; background: var(--color-periwinkle-light); bottom: -110px; left: -60px; }
 .spark { position: absolute; color: var(--color-periwinkle); opacity: 0.55; }
-.spark.s1 { top: 120px; left: 6%; width: 30px; height: 30px; animation: float 7s ease-in-out infinite; }
-.spark.s2 { bottom: 130px; right: 40%; width: 22px; height: 22px; color: var(--color-salmon); animation: float 9s ease-in-out infinite 1s; }
-.spark.s3 { top: 250px; right: 4%; width: 26px; height: 26px; color: var(--color-accent); animation: float 8s ease-in-out infinite 0.5s; }
+.spark.s1 { top: 120px; left: 6%; font-size: 30px; animation: float 7s ease-in-out infinite; }
+.spark.s2 { bottom: 130px; right: 40%; font-size: 22px; color: var(--color-salmon); animation: float 9s ease-in-out infinite 1s; }
+.spark.s3 { top: 250px; right: 4%; font-size: 26px; color: var(--color-accent); animation: float 8s ease-in-out infinite 0.5s; }
 
 .hero-grid {
   position: relative; z-index: 1;
@@ -585,7 +576,7 @@ onBeforeUnmount(() => observer?.disconnect())
   display: grid; place-items: center; color: #fff;
   background: linear-gradient(140deg, var(--color-salmon), var(--color-salmon-dark));
 }
-.lernset-ico svg { width: 22px; height: 22px; }
+.lernset-ico i { font-size: 21px; }
 .lernset-head h4 { font-size: 1.02rem; font-weight: 800; }
 .lernset-head span { font-size: 0.84rem; color: var(--color-text-muted); font-weight: 600; }
 .progress-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; font-size: 0.82rem; font-weight: 700; color: var(--color-text-muted); }
@@ -612,7 +603,7 @@ onBeforeUnmount(() => observer?.disconnect())
   display: flex; align-items: center; gap: 11px;
 }
 .stat-ico { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; flex-shrink: 0; }
-.stat-ico svg { width: 18px; height: 18px; }
+.stat-ico i { font-size: 17px; }
 .stat-ico.peri { background: var(--color-periwinkle-light); color: var(--color-periwinkle-dark); }
 .stat-ico.succ { background: #dcfce7; color: var(--color-success); }
 .stat .num { font-weight: 900; font-size: 1.18rem; line-height: 1; }
@@ -625,7 +616,7 @@ onBeforeUnmount(() => observer?.disconnect())
   display: flex; align-items: center; gap: 7px; font-weight: 800; font-size: 0.84rem;
   box-shadow: var(--shadow-card); color: var(--color-success);
 }
-.preview-badge svg { width: 16px; height: 16px; }
+.preview-badge i { font-size: 15px; }
 
 /* ---------- Generic section spacing ---------- */
 .section { padding: 96px 0; }
@@ -643,7 +634,7 @@ onBeforeUnmount(() => observer?.disconnect())
   width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center;
   margin-bottom: 22px; color: #fff;
 }
-.feature-ico svg { width: 28px; height: 28px; }
+.feature-ico i { font-size: 26px; }
 .feature-ico.salmon { background: linear-gradient(140deg, var(--color-salmon), var(--color-salmon-dark)); box-shadow: var(--shadow-salmon); }
 .feature-ico.peri { background: linear-gradient(140deg, var(--color-periwinkle), var(--color-periwinkle-dark)); box-shadow: var(--shadow-soft); }
 .feature-ico.acc { background: linear-gradient(140deg, var(--color-accent), #f59e3c); box-shadow: 0 14px 32px -14px rgba(245, 158, 60, 0.5); }
@@ -660,7 +651,7 @@ onBeforeUnmount(() => observer?.disconnect())
   display: grid; place-items: center; color: #fff;
   background: linear-gradient(140deg, var(--color-success), #16a34a);
 }
-.benefit-check svg { width: 17px; height: 17px; }
+.benefit-check i { font-size: 15px; }
 .benefit-item .b-text strong { font-weight: 800; font-size: 1.05rem; display: block; }
 .benefit-item .b-text span { color: var(--color-text-muted); font-weight: 500; font-size: 0.95rem; }
 
@@ -674,7 +665,7 @@ onBeforeUnmount(() => observer?.disconnect())
 .vv-set { display: flex; align-items: center; gap: 14px; padding: 15px; border: 1px solid var(--color-border-purple); border-radius: var(--radius-md); margin-bottom: 12px; transition: border-color 0.2s; }
 .vv-set:hover { border-color: var(--color-periwinkle); }
 .vv-set .vv-ico { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex-shrink: 0; color: #fff; }
-.vv-set .vv-ico svg { width: 20px; height: 20px; }
+.vv-set .vv-ico i { font-size: 19px; }
 .vv-set .vv-body { flex: 1; }
 .vv-set .vv-body strong { font-weight: 800; font-size: 0.98rem; }
 .vv-set .vv-body .vv-meta { font-size: 0.8rem; color: var(--color-text-muted); font-weight: 600; }
@@ -715,7 +706,7 @@ onBeforeUnmount(() => observer?.disconnect())
 .flip-q { font-size: clamp(1.4rem, 2.6vw, 1.85rem); font-weight: 900; line-height: 1.2; letter-spacing: -0.02em; }
 .flip-a { font-size: 1.08rem; font-weight: 600; line-height: 1.55; max-width: 440px; }
 .flip-hint { margin-top: 22px; font-size: 0.84rem; font-weight: 700; color: var(--color-text-muted); display: inline-flex; align-items: center; gap: 7px; }
-.flip-hint svg { width: 15px; height: 15px; }
+.flip-hint i { font-size: 14px; }
 
 .rate-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 22px; }
 .rate-btn {
@@ -724,7 +715,7 @@ onBeforeUnmount(() => observer?.disconnect())
   background: var(--color-surface); border: 1.5px solid var(--color-border-purple);
   transition: transform 0.2s var(--ease), border-color 0.2s, background 0.2s, color 0.2s;
 }
-.rate-btn svg { width: 18px; height: 18px; }
+.rate-btn i { width: 18px; font-size: 17px; text-align: center; }
 .rate-btn:hover { transform: translateY(-3px); }
 .rate-btn.no:hover { border-color: var(--color-salmon); color: var(--color-salmon-dark); background: var(--color-salmon-light); }
 .rate-btn.almost:hover { border-color: var(--color-accent); color: #d97a2a; background: #fff0dd; }
@@ -739,7 +730,7 @@ onBeforeUnmount(() => observer?.disconnect())
 }
 .info-card:hover { transform: translateX(6px); }
 .info-ico { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; flex-shrink: 0; color: #fff; }
-.info-ico svg { width: 24px; height: 24px; }
+.info-ico i { font-size: 22px; }
 .info-ico.salmon { background: linear-gradient(140deg, var(--color-salmon), var(--color-salmon-dark)); }
 .info-ico.peri { background: linear-gradient(140deg, var(--color-periwinkle), var(--color-periwinkle-dark)); }
 .info-ico.acc { background: linear-gradient(140deg, var(--color-accent), #f59e3c); }
@@ -755,11 +746,11 @@ onBeforeUnmount(() => observer?.disconnect())
   box-shadow: var(--shadow-lift);
 }
 .cta-block .cta-deco { position: absolute; inset: 0; pointer-events: none; opacity: 0.5; }
-.cta-block .cta-deco svg { position: absolute; color: rgba(255, 255, 255, 0.9); }
-.cta-block .cd1 { width: 60px; height: 60px; top: 30px; left: 8%; }
-.cta-block .cd2 { width: 42px; height: 42px; bottom: 40px; left: 22%; }
-.cta-block .cd3 { width: 54px; height: 54px; top: 50px; right: 12%; }
-.cta-block .cd4 { width: 36px; height: 36px; bottom: 34px; right: 26%; }
+.cta-block .cta-deco i { position: absolute; color: rgba(255, 255, 255, 0.9); }
+.cta-block .cd1 { font-size: 60px; top: 30px; left: 8%; }
+.cta-block .cd2 { font-size: 42px; bottom: 40px; left: 22%; }
+.cta-block .cd3 { font-size: 54px; top: 50px; right: 12%; }
+.cta-block .cd4 { font-size: 36px; bottom: 34px; right: 26%; }
 .cta-ring { position: absolute; border: 2px solid rgba(255, 255, 255, 0.25); border-radius: 50%; }
 .cta-ring.r1 { width: 280px; height: 280px; top: -120px; right: -60px; }
 .cta-ring.r2 { width: 200px; height: 200px; bottom: -90px; left: -40px; }

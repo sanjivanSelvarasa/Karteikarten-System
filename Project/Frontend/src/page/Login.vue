@@ -10,7 +10,7 @@
         <div class="brand-panel">
           <div class="brand-inner">
             <div class="logo">
-              <span class="logo-icon">🃏</span>
+              <i class="fa-solid fa-layer-group logo-icon" aria-hidden="true"></i>
             </div>
             <h1 class="brand-title">Kartei<br /><span>Karten</span></h1>
             <p class="brand-tagline">
@@ -20,15 +20,15 @@
   
             <div class="feature-list">
               <div class="feature-item">
-                <span class="feature-icon">🧠</span>
+                <span class="feature-icon"><i class="fa-solid fa-brain" aria-hidden="true"></i></span>
                 <span>Smarter Wiederholungs-Algorithmus</span>
               </div>
               <div class="feature-item">
-                <span class="feature-icon">📊</span>
+                <span class="feature-icon"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></span>
                 <span>Fortschritts-Statistiken</span>
               </div>
               <div class="feature-item">
-                <span class="feature-icon">🆓</span>
+                <span class="feature-icon"><i class="fa-solid fa-gift" aria-hidden="true"></i></span>
                 <span>100% kostenlos – keine Abos</span>
               </div>
             </div>
@@ -48,10 +48,7 @@
                 <label for="email" class="label">E-Mail</label>
                 <div class="input-wrap">
                   <span class="input-icon">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <rect x="2" y="4" width="20" height="16" rx="2" />
-                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                    </svg>
+                    <i class="fa-solid fa-envelope" aria-hidden="true"></i>
                   </span>
                   <input
                     id="email"
@@ -70,10 +67,7 @@
                 <label for="password" class="label">Passwort</label>
                 <div class="input-wrap">
                   <span class="input-icon">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
+                    <i class="fa-solid fa-lock" aria-hidden="true"></i>
                   </span>
                   <input
                     id="password"
@@ -84,15 +78,7 @@
                     autocomplete="current-password"
                   />
                   <button type="button" class="toggle-pw" @click="showPassword = !showPassword" tabindex="-1">
-                    <svg v-if="!showPassword" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                      <circle cx="12" cy="12" r="3" />
-                    </svg>
-                    <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
-                      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
-                      <line x1="1" y1="1" x2="23" y2="23" />
-                    </svg>
+                    <i :class="showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'" aria-hidden="true"></i>
                   </button>
                 </div>
                 <span v-if="errors.password" class="error-msg">{{ errors.password }}</span>
@@ -108,9 +94,7 @@
               </div>
   
               <div v-if="loginError" class="alert alert--error">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
-                </svg>
+                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
                 {{ loginError }}
               </div>
   

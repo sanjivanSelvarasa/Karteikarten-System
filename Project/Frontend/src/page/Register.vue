@@ -10,7 +10,7 @@
           <div class="form-inner">
             <div class="form-header">
               <div class="logo">
-                <span>🃏</span>
+                <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
               </div>
               <h2 class="form-title">Konto erstellen</h2>
               <p class="form-subtitle">Tritt der Gruppe 3 Lernrevolution bei</p>
@@ -23,9 +23,7 @@
                   <label for="firstName" class="label">Vorname</label>
                   <div class="input-wrap">
                     <span class="input-icon">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                      </svg>
+                      <i class="fa-solid fa-user" aria-hidden="true"></i>
                     </span>
                     <input
                       id="firstName"
@@ -44,9 +42,7 @@
                   <label for="lastName" class="label">Nachname</label>
                   <div class="input-wrap">
                     <span class="input-icon">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                      </svg>
+                      <i class="fa-solid fa-user" aria-hidden="true"></i>
                     </span>
                     <input
                       id="lastName"
@@ -67,10 +63,7 @@
                 <label for="email" class="label">E-Mail</label>
                 <div class="input-wrap">
                   <span class="input-icon">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <rect x="2" y="4" width="20" height="16" rx="2"/>
-                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-                    </svg>
+                    <i class="fa-solid fa-envelope" aria-hidden="true"></i>
                   </span>
                   <input
                     id="email"
@@ -90,9 +83,7 @@
                 <label for="password" class="label">Passwort</label>
                 <div class="input-wrap">
                   <span class="input-icon">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                    </svg>
+                    <i class="fa-solid fa-lock" aria-hidden="true"></i>
                   </span>
                   <input
                     id="password"
@@ -105,14 +96,7 @@
                     @blur="validate('password')"
                   />
                   <button type="button" class="toggle-pw" @click="showPassword = !showPassword" tabindex="-1">
-                    <svg v-if="!showPassword" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
-                    </svg>
-                    <svg v-else width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
-                      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
-                      <line x1="1" y1="1" x2="23" y2="23"/>
-                    </svg>
+                    <i :class="showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'" aria-hidden="true"></i>
                   </button>
                 </div>
                 <!-- Strength meter -->
@@ -135,9 +119,7 @@
                 <label for="confirmPassword" class="label">Passwort bestätigen</label>
                 <div class="input-wrap">
                   <span class="input-icon">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <polyline points="20 6 9 17 4 12"/>
-                    </svg>
+                    <i class="fa-solid fa-check" aria-hidden="true"></i>
                   </span>
                   <input
                     id="confirmPassword"
@@ -166,29 +148,25 @@
               <span v-if="errors.terms" class="error-msg">{{ errors.terms }}</span>
   
               <div v-if="registerError" class="alert alert--error">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-                </svg>
+                <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
                 {{ registerError }}
               </div>
   
               <div v-if="success" class="alert alert--success">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
+                <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
                 Konto erfolgreich erstellt! Du wirst weitergeleitet…
               </div>
   
               <button type="submit" class="btn-primary" :class="{ 'btn--loading': loading }" :disabled="loading || success">
                 <span v-if="!loading && !success">Konto erstellen</span>
                 <span v-else-if="loading" class="loader"></span>
-                <span v-else>✓ Erstellt!</span>
+                <span v-else><i class="fa-solid fa-check" aria-hidden="true"></i> Erstellt!</span>
               </button>
             </form>
   
             <p class="switch-text">
               Schon ein Konto?
-              <router-link to="/login" class="switch-link">← Anmelden</router-link>
+              <router-link to="/login" class="switch-link"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Anmelden</router-link>
             </p>
           </div>
         </div>

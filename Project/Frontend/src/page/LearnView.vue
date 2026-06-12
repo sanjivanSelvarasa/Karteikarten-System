@@ -106,33 +106,31 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleKeydown))
   <div class="learn-view">
     <aside class="sidebar" aria-label="Hauptnavigation">
       <RouterLink class="brand" to="/dashboard">
-        <span class="brand-mark">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z"/><path d="m8.5 12.5 2.2 2.2 4.3-4.6"/></svg>
-        </span>
+        <span class="brand-mark"><i class="fa-solid fa-feather-pointed" aria-hidden="true"></i></span>
         <span><strong>HawkTalk</strong><small>Karteikarten lernen</small></span>
       </RouterLink>
 
       <nav class="nav-list">
         <span class="nav-caption">Menü</span>
-        <RouterLink class="nav-item" to="/dashboard"><span>▦</span> Dashboard</RouterLink>
-        <a class="nav-item" href="#"><span>▱</span> Meine Lernsets</a>
-        <a class="nav-item active" href="#" aria-current="page"><span>◇</span> Lernmodus</a>
-        <a class="nav-item" href="#"><span>⌁</span> Fortschritt</a>
-        <a class="nav-item" href="#"><span>○</span> Profil</a>
-        <a class="nav-item" href="#"><span>⚙</span> Einstellungen</a>
+        <RouterLink class="nav-item" to="/dashboard"><span><i class="fa-solid fa-table-columns" aria-hidden="true"></i></span> Dashboard</RouterLink>
+        <a class="nav-item" href="#"><span><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span> Meine Lernsets</a>
+        <a class="nav-item active" href="#" aria-current="page"><span><i class="fa-solid fa-bolt" aria-hidden="true"></i></span> Lernmodus</a>
+        <a class="nav-item" href="#"><span><i class="fa-solid fa-chart-line" aria-hidden="true"></i></span> Fortschritt</a>
+        <a class="nav-item" href="#"><span><i class="fa-solid fa-user" aria-hidden="true"></i></span> Profil</a>
+        <a class="nav-item" href="#"><span><i class="fa-solid fa-gear" aria-hidden="true"></i></span> Einstellungen</a>
       </nav>
 
       <div class="user-card">
         <span class="avatar">SM</span>
         <span><strong>Sanjivan</strong><small>Premium</small></span>
-        <RouterLink to="/login" title="Abmelden">↗</RouterLink>
+        <RouterLink to="/login" title="Abmelden" aria-label="Abmelden"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i></RouterLink>
       </div>
     </aside>
 
     <div class="workspace">
       <header class="topbar">
         <div class="set-heading">
-          <button class="icon-button" title="Zurück" @click="router.push('/dashboard')">←</button>
+          <button class="icon-button" title="Zurück" aria-label="Zurück" @click="router.push('/dashboard')"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i></button>
           <div>
             <h1>{{ setTitle }}</h1>
             <p>Karte {{ current }} von {{ total }}</p>
@@ -140,7 +138,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleKeydown))
         </div>
         <div class="session-actions">
           <span class="session-status"><i></i>Lernsession aktiv</span>
-          <button class="end-button" @click="summaryOpen = true"><span>□</span> Session beenden</button>
+          <button class="end-button" @click="summaryOpen = true"><span><i class="fa-solid fa-stop" aria-hidden="true"></i></span> Session beenden</button>
         </div>
       </header>
 
@@ -157,28 +155,28 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleKeydown))
               <div class="flip-card" :class="{ flipped }">
                 <article class="card-face card-front" role="button" tabindex="0" @click="flipCard">
                   <div class="face-header">
-                    <span class="pill question-pill">? Frage</span>
-                    <span class="face-icon">▱</span>
+                    <span class="pill question-pill"><i class="fa-solid fa-question" aria-hidden="true"></i> Frage</span>
+                    <span class="face-icon"><i class="fa-solid fa-note-sticky" aria-hidden="true"></i></span>
                   </div>
                   <div class="face-content">
                     <h2>{{ activeCard.question }}</h2>
                     <p>Klicke auf die Karte oder den Button, um die Antwort anzuzeigen.</p>
                   </div>
-                  <button class="reveal-button" @click.stop="flipCard"><span>◉</span> Antwort anzeigen</button>
+                  <button class="reveal-button" @click.stop="flipCard"><span><i class="fa-solid fa-eye" aria-hidden="true"></i></span> Antwort anzeigen</button>
                 </article>
 
                 <article class="card-face card-back">
                   <div class="face-header">
-                    <span class="pill answer-pill">✓ Antwort</span>
-                    <button class="face-icon" title="Frage erneut ansehen" @click="flipCard">↻</button>
+                    <span class="pill answer-pill"><i class="fa-solid fa-check" aria-hidden="true"></i> Antwort</span>
+                    <button class="face-icon" title="Frage erneut ansehen" aria-label="Frage erneut ansehen" @click="flipCard"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i></button>
                   </div>
                   <div class="face-content answer-content"><p>{{ activeCard.answer }}</p></div>
                   <div class="rating">
                     <p>Wie gut wusstest du es?</p>
                     <div class="rating-grid">
-                      <button class="rating-button again" @click="rate('again')">ⓧ Nicht gewusst</button>
-                      <button class="rating-button hard" @click="rate('hard')">◐ Fast gewusst</button>
-                      <button class="rating-button good" @click="rate('good')">✓ Gewusst</button>
+                      <button class="rating-button again" @click="rate('again')"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Nicht gewusst</button>
+                      <button class="rating-button hard" @click="rate('hard')"><i class="fa-solid fa-minus" aria-hidden="true"></i> Fast gewusst</button>
+                      <button class="rating-button good" @click="rate('good')"><i class="fa-solid fa-check" aria-hidden="true"></i> Gewusst</button>
                     </div>
                   </div>
                 </article>
@@ -187,9 +185,9 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleKeydown))
           </div>
 
           <div class="card-navigation">
-            <button :disabled="current <= 1" @click="previousCard">‹ Vorherige Karte</button>
+            <button :disabled="current <= 1" @click="previousCard"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i> Vorherige Karte</button>
             <button class="summary-link" @click="summaryOpen = true">Abschluss-Ansicht ansehen</button>
-            <button @click="nextCard">Nächste Karte ›</button>
+            <button @click="nextCard">Nächste Karte <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
           </div>
           <p class="keyboard-tip">Tipp: <kbd>Leertaste</kbd> zum Aufdecken · <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> zum Bewerten</p>
         </section>
@@ -197,13 +195,13 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleKeydown))
         <aside class="overview">
           <div><h2>Session-Übersicht</h2><p>Dein Fortschritt in dieser Runde</p></div>
           <div class="stat-grid">
-            <article><span class="stat-icon purple">▱</span><strong>{{ current }}</strong><small>Gelernte Karten</small></article>
-            <article><span class="stat-icon green">✓</span><strong>{{ known }}</strong><small>Gewusst</small></article>
-            <article><span class="stat-icon salmon">↻</span><strong>{{ repeat }}</strong><small>Wiederholen</small></article>
-            <article><span class="stat-icon orange">◷</span><strong>{{ remainingMinutes }} Min.</strong><small>Geschätzte Restzeit</small></article>
+            <article><span class="stat-icon purple"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span><strong>{{ current }}</strong><small>Gelernte Karten</small></article>
+            <article><span class="stat-icon green"><i class="fa-solid fa-check" aria-hidden="true"></i></span><strong>{{ known }}</strong><small>Gewusst</small></article>
+            <article><span class="stat-icon salmon"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i></span><strong>{{ repeat }}</strong><small>Wiederholen</small></article>
+            <article><span class="stat-icon orange"><i class="fa-solid fa-clock" aria-hidden="true"></i></span><strong>{{ remainingMinutes }} Min.</strong><small>Geschätzte Restzeit</small></article>
           </div>
           <section class="difficult">
-            <div class="difficult-title"><span>!</span><h3>Schwierige Karten</h3></div>
+            <div class="difficult-title"><span><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></span><h3>Schwierige Karten</h3></div>
             <ul>
               <li v-for="card in difficultCards" :key="card.label"><strong>{{ card.label }}</strong><span>{{ card.count }}×</span></li>
             </ul>
@@ -218,8 +216,8 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleKeydown))
     <Transition name="fade">
       <div v-if="summaryOpen" class="overlay" @click.self="summaryOpen = false">
         <section class="summary-card" role="dialog" aria-modal="true" aria-labelledby="summary-title">
-          <button class="close-button" title="Schließen" @click="summaryOpen = false">×</button>
-          <span class="trophy">♕</span>
+          <button class="close-button" title="Schließen" aria-label="Schließen" @click="summaryOpen = false"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+          <span class="trophy"><i class="fa-solid fa-trophy" aria-hidden="true"></i></span>
           <h2 id="summary-title">Session abgeschlossen</h2>
           <p>Du hast {{ current }} Karteikarten wiederholt.</p>
           <div class="summary-stats">
@@ -227,8 +225,8 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleKeydown))
             <div class="almost"><strong>{{ hard }}</strong><small>fast gewusst</small></div>
             <div class="unknown"><strong>{{ repeat - hard }}</strong><small>nicht gewusst</small></div>
           </div>
-          <RouterLink class="dashboard-button" to="/dashboard">▦ Zurück zum Dashboard</RouterLink>
-          <button class="restart-button" @click="restartDifficult">↻ Schwierige Karten wiederholen</button>
+          <RouterLink class="dashboard-button" to="/dashboard"><i class="fa-solid fa-table-columns" aria-hidden="true"></i> Zurück zum Dashboard</RouterLink>
+          <button class="restart-button" @click="restartDifficult"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Schwierige Karten wiederholen</button>
         </section>
       </div>
     </Transition>
@@ -242,7 +240,7 @@ button { cursor: pointer; }
 .sidebar { position: sticky; top: 0; display: flex; width: 264px; height: 100vh; flex: 0 0 264px; flex-direction: column; border-right: 1px solid rgba(214,211,255,.65); background: rgba(255,255,255,.82); backdrop-filter: blur(12px); }
 .brand { display: flex; height: 76px; align-items: center; gap: 12px; padding: 0 24px; border-bottom: 1px solid rgba(214,211,255,.55); }
 .brand-mark { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 16px; color: white; background: linear-gradient(135deg,var(--color-salmon),var(--color-periwinkle)); box-shadow: 0 10px 24px -12px rgba(143,137,232,.6); }
-.brand-mark svg { width: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.brand-mark i { font-size: 20px; }
 .brand > span:last-child, .user-card > span:nth-child(2) { display: flex; min-width: 0; flex-direction: column; line-height: 1.15; }
 .brand strong { font-size: 18px; font-weight: 900; }.brand small, .user-card small { margin-top: 3px; color: var(--color-text-muted); font-size: 11px; font-weight: 700; }
 .nav-list { display: flex; flex: 1; flex-direction: column; gap: 4px; padding: 20px 12px; }.nav-caption { padding: 0 12px 8px; color: var(--color-text-muted); font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }

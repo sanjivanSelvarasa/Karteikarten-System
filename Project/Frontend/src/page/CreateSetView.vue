@@ -43,8 +43,8 @@ async function createSet() {
 <template>
   <main class="create-page">
     <section class="create-card">
-      <button class="back" @click="router.push('/dashboard')">← Dashboard</button>
-      <span class="mark">+</span>
+      <button class="back" @click="router.push('/dashboard')"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Dashboard</button>
+      <span class="mark"><i class="fa-solid fa-plus" aria-hidden="true"></i></span>
       <h1>Neues Lernset</h1>
       <p>Lege zuerst das Lernset an. Karten kannst du anschließend ergänzen.</p>
 
