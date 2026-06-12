@@ -4,6 +4,12 @@ function findUserByEmail(email) {
   return db.prepare('SELECT * FROM users WHERE email = ?').get(email);
 }
 
+function findUserByUsername(username) {
+  return db
+    .prepare('SELECT * FROM users WHERE LOWER(username) = LOWER(?)')
+    .get(username);
+}
+
 function findUserById(userId) {
   return db
     .prepare(
@@ -26,6 +32,7 @@ function createUser({ username, email, passwordHash }) {
 
 module.exports = {
   findUserByEmail,
+  findUserByUsername,
   findUserById,
   createUser,
 };

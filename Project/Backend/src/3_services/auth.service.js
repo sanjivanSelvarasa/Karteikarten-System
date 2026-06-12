@@ -1,5 +1,10 @@
 const bcrypt = require('bcryptjs');
-const { createUser, findUserByEmail, findUserById } = require('../4_models/user.model');
+const {
+  createUser,
+  findUserByEmail,
+  findUserByUsername,
+  findUserById,
+} = require('../4_models/user.model');
 const { signAccessToken } = require('../5_utils/jwt');
 const { createHttpError } = require('../5_utils/httpError');
 const { isNonEmptyString, isValidEmail } = require('../5_utils/validators');
@@ -17,17 +22,32 @@ async function register({ username, email, password }) {
     throw createHttpError(400, 'Password must be at least 8 characters long');
   }
 
-  const existing = findUserByEmail(email.trim().toLowerCase());
-  if (existing) {
+  const normalizedUsername = username.trim();
+  const normalizedEmail = email.trim().toLowerCase();
+
+  if (findUserByUsername(normalizedUsername)) {
+    throw createHttpError(409, 'Username is already registered');
+  }
+
+  if (findUserByEmail(normalizedEmail)) {
     throw createHttpError(409, 'Email is already registered');
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
-  const user = createUser({
-    username: username.trim(),
-    email: email.trim().toLowerCase(),
-    passwordHash,
-  });
+  let user;
+  try {
+    user = createUser({
+      username: normalizedUsername,
+      email: normalizedEmail,
+      passwordHash,
+    });
+  } catch (error) {
+    if (String(error?.message).includes('UNIQUE constraint failed: users.')) {
+      const field = String(error.message).includes('users.username') ? 'Username' : 'Email';
+      throw createHttpError(409, `${field} is already registered`);
+    }
+    throw error;
+  }
 
   const token = signAccessToken({
     userId: user.user_id,
