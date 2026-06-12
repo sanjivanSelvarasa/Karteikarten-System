@@ -1,7 +1,7 @@
 {
   "name": "karteikarten-backend",
   "version": "1.0.0",
-  "description": "Backend API for the Karteikarten-System",
+  "description": "Backend API for StudyDeck",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {

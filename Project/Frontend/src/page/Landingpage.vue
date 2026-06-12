@@ -83,13 +83,13 @@ onBeforeUnmount(() => observer?.disconnect())
 </script>
 
 <template>
-  <div ref="root" class="hawktalk">
+  <div ref="root" class="studydeck">
     <!-- ===================== NAVIGATION ===================== -->
     <header class="navbar">
       <div class="container nav-inner">
-        <a href="#" class="brand" aria-label="HawkTalk Startseite">
+        <a href="#" class="brand" aria-label="StudyDeck Startseite">
           <span class="brand-mark"><i class="fa-solid fa-feather-pointed" aria-hidden="true"></i></span>
-          HawkTalk
+          StudyDeck
         </a>
 
         <nav class="nav-links" aria-label="Hauptnavigation">
@@ -133,12 +133,12 @@ onBeforeUnmount(() => observer?.disconnect())
             <div class="dots">
               <span>SM</span><span>LB</span><span>NK</span><span>+</span>
             </div>
-            Über 12'000 Lernende üben bereits mit HawkTalk
+            Über 12'000 Lernende üben bereits mit StudyDeck
           </div>
         </div>
 
         <!-- App Preview Mockup -->
-        <div class="preview reveal" aria-label="HawkTalk App-Vorschau">
+        <div class="preview reveal" aria-label="StudyDeck App-Vorschau">
           <div class="preview-badge">
             <i class="fa-solid fa-check" aria-hidden="true"></i>
             Gespeichert
@@ -198,7 +198,7 @@ onBeforeUnmount(() => observer?.disconnect())
         <div class="section-head reveal">
           <span class="eyebrow purple">Funktionen</span>
           <h2 class="section-title">Alles, was du zum effizienten Lernen brauchst</h2>
-          <p class="section-lead">Von der ersten Karteikarte bis zum vollständig beherrschten Thema – HawkTalk begleitet dich durch jeden Schritt.</p>
+          <p class="section-lead">Von der ersten Karteikarte bis zum vollständig beherrschten Thema – StudyDeck begleitet dich durch jeden Schritt.</p>
         </div>
 
         <div class="feature-grid">
@@ -218,8 +218,8 @@ onBeforeUnmount(() => observer?.disconnect())
       <div class="container vorteile-grid">
         <div class="reveal">
           <span class="eyebrow">Vorteile</span>
-          <h2 class="section-title vorteile-title">Warum HawkTalk besser ist als Papierkarteikarten</h2>
-          <p class="section-lead vorteile-lead">Schluss mit losen Zetteln und unstrukturiertem Lernen. HawkTalk hält deine Inhalte geordnet und passt sich deinem Tempo an.</p>
+          <h2 class="section-title vorteile-title">Warum StudyDeck besser ist als Papierkarteikarten</h2>
+          <p class="section-lead vorteile-lead">Schluss mit losen Zetteln und unstrukturiertem Lernen. StudyDeck hält deine Inhalte geordnet und passt sich deinem Tempo an.</p>
 
           <div class="benefit-list">
             <div v-for="benefit in benefits" :key="benefit.title" class="benefit-item">
@@ -261,7 +261,7 @@ onBeforeUnmount(() => observer?.disconnect())
         <div class="section-head reveal">
           <span class="eyebrow purple">Lernmodus</span>
           <h2 class="section-title">So fühlt sich gezieltes Wiederholen an</h2>
-          <p class="section-lead">Karte aufdecken, ehrlich bewerten, weiterlernen. HawkTalk merkt sich, was dir schwerfällt.</p>
+          <p class="section-lead">Karte aufdecken, ehrlich bewerten, weiterlernen. StudyDeck merkt sich, was dir schwerfällt.</p>
         </div>
 
         <div class="lm-grid">
@@ -352,7 +352,7 @@ onBeforeUnmount(() => observer?.disconnect())
           <div class="footer-brand">
             <a href="#" class="brand">
               <span class="brand-mark"><i class="fa-solid fa-feather-pointed" aria-hidden="true"></i></span>
-              HawkTalk
+              StudyDeck
             </a>
             <p>Digitale Karteikarten für Schüler und Lernende. Erstelle eigene Lernsets, wiederhole personalisiert und behalte deinen Fortschritt im Blick.</p>
           </div>
@@ -365,7 +365,7 @@ onBeforeUnmount(() => observer?.disconnect())
         <div class="footer-divider" />
 
         <div class="footer-bottom">
-          <span>© 2026 HawkTalk. Alle Rechte vorbehalten.</span>
+          <span>© 2026 StudyDeck. Alle Rechte vorbehalten.</span>
           <span>Mit Sorgfalt entwickelt für besseres Lernen.</span>
         </div>
       </div>
@@ -374,7 +374,7 @@ onBeforeUnmount(() => observer?.disconnect())
 </template>
 
 <style scoped>
-.hawktalk {
+.studydeck {
   --color-salmon: #ff9189;
   --color-periwinkle: #b9b4ff;
 
@@ -419,12 +419,12 @@ onBeforeUnmount(() => observer?.disconnect())
   -webkit-font-smoothing: antialiased;
 }
 
-.hawktalk *,
-.hawktalk *::before,
-.hawktalk *::after { box-sizing: border-box; }
+.studydeck *,
+.studydeck *::before,
+.studydeck *::after { box-sizing: border-box; }
 
-.hawktalk a { text-decoration: none; color: inherit; }
-.hawktalk button { font-family: inherit; cursor: pointer; border: none; background: none; }
+.studydeck a { text-decoration: none; color: inherit; }
+.studydeck button { font-family: inherit; cursor: pointer; border: none; background: none; }
 
 .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
 
@@ -775,10 +775,10 @@ onBeforeUnmount(() => observer?.disconnect())
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
 .reveal.in { opacity: 1; transform: none; }
 
-.hawktalk :focus-visible { outline: 3px solid var(--color-periwinkle-dark); outline-offset: 3px; border-radius: 6px; }
+.studydeck :focus-visible { outline: 3px solid var(--color-periwinkle-dark); outline-offset: 3px; border-radius: 6px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .hawktalk *, .hawktalk *::before, .hawktalk *::after { animation: none !important; }
+  .studydeck *, .studydeck *::before, .studydeck *::after { animation: none !important; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .flip-inner { transition: none; }
 }

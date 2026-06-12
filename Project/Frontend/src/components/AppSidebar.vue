@@ -30,14 +30,14 @@ const initials = computed(() => props.user?.username
   .map((part) => part[0])
   .join('')
   .slice(0, 2)
-  .toUpperCase() || 'HT')
+  .toUpperCase() || 'SD')
 </script>
 
 <template>
   <aside class="app-sidebar" aria-label="Hauptnavigation">
     <RouterLink class="sidebar-brand" to="/">
       <span class="brand-mark"><i class="fa-solid fa-feather-pointed" aria-hidden="true"></i></span>
-      <span class="brand-name">Hawk<span>Talk</span></span>
+      <span class="brand-name">Study<span>Deck</span></span>
     </RouterLink>
 
     <p class="nav-label">Menü</p>
@@ -67,7 +67,7 @@ const initials = computed(() => props.user?.username
 
     <div class="sidebar-spacer"></div>
     <section class="upgrade-card">
-      <h2>HawkTalk Pro</h2>
+      <h2>StudyDeck Pro</h2>
       <p>Unbegrenzte Lernsets und smarte Wiederholungen freischalten.</p>
       <button type="button" @click="emit('upgrade')">Jetzt upgraden</button>
     </section>

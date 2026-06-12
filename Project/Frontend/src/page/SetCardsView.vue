@@ -157,7 +157,7 @@ onBeforeUnmount(() => {
       <header class="topbar">
         <RouterLink class="brand" to="/dashboard">
           <span class="brand-mark"><i class="fa-solid fa-feather-pointed" aria-hidden="true"></i></span>
-          <span>Hawk<em>Talk</em></span>
+          <span>Study<em>Deck</em></span>
         </RouterLink>
         <button class="account" title="Zum Dashboard" aria-label="Zum Dashboard" @click="router.push('/dashboard')">
           <i class="fa-solid fa-user" aria-hidden="true"></i>

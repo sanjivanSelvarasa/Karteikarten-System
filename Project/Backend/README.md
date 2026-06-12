@@ -1,6 +1,6 @@
 # Backend API
 
-Express + SQLite backend for the Karteikarten-System.
+Express + SQLite backend for StudyDeck.
 
 ## Run locally
 

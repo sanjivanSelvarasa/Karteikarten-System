@@ -38,7 +38,7 @@ function readStoredUser(): User | null {
   try { return JSON.parse(raw) as User } catch { return null }
 }
 
-const initials = computed(() => user.value?.username.split(/\s+/).map((part) => part[0]).join('').slice(0, 2).toUpperCase() || 'HT')
+const initials = computed(() => user.value?.username.split(/\s+/).map((part) => part[0]).join('').slice(0, 2).toUpperCase() || 'SD')
 const totalCards = computed(() => learningSets.value.reduce((sum, set) => sum + set.cards.length, 0))
 const averageCards = computed(() => learningSets.value.length ? Math.round(totalCards.value / learningSets.value.length) : 0)
 const nextSet = computed(() => learningSets.value.find((set) => set.cards.length > 0) || null)
@@ -351,7 +351,7 @@ onMounted(() => {
           </template>
 
           <template v-else>
-            <span class="modal-mark salmon"><i class="fa-solid fa-star" aria-hidden="true"></i></span><h2>HawkTalk Pro</h2><p>Das Projekt hat aktuell keine Bezahlfunktion. Alle vorhandenen Lernfunktionen bleiben frei nutzbar.</p>
+            <span class="modal-mark salmon"><i class="fa-solid fa-star" aria-hidden="true"></i></span><h2>StudyDeck Pro</h2><p>Das Projekt hat aktuell keine Bezahlfunktion. Alle vorhandenen Lernfunktionen bleiben frei nutzbar.</p>
             <button class="modal-primary" @click="closeModal">Verstanden</button>
           </template>
         </section>
